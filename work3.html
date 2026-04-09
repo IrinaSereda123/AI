@@ -2,8 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📖 Практическая работа №2 — AI-помощник с поиском в интернете</title>
+    <title>📚 Лекция — Асинхронные запросы: GET и POST</title>
     <style>
         * {
             margin: 0;
@@ -15,17 +14,16 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #eef2f7;
             color: #333;
-            line-height: 1.7;
             padding: 30px 20px;
         }
         
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             text-align: center;
             margin-bottom: 10px;
             color: #1a1a2e;
@@ -35,40 +33,29 @@
             text-align: center;
             color: #666;
             margin-bottom: 40px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         h2 {
-            font-size: 1.8rem;
-            margin: 30px 0 20px;
+            font-size: 1.5rem;
+            margin: 40px 0 15px;
             padding-left: 15px;
-            border-left: 5px solid #ff6b6b;
+            border-left: 5px solid #667eea;
             color: #2c3e50;
         }
         
         h3 {
-            font-size: 1.3rem;
-            margin: 25px 0 15px;
-            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin: 25px 0 10px;
+            color: #667eea;
         }
         
-        .toc {
+        .card {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 20px;
             margin: 20px 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .toc a {
-            color: #ff6b6b;
-            text-decoration: none;
-            display: block;
-            margin: 8px 0;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
         }
         
         .code-block {
@@ -76,15 +63,15 @@
             border-radius: 12px;
             margin: 15px 0;
             overflow-x: auto;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid #667eea;
         }
         
         .code-header {
             background: #161b22;
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-bottom: 1px solid #30363d;
             font-family: monospace;
-            font-size: 13px;
+            font-size: 12px;
             color: #feca57;
         }
         
@@ -101,40 +88,27 @@
             white-space: pre-wrap;
         }
         
-        .line-number {
-            display: inline-block;
-            width: 45px;
-            color: #6e7681;
-            user-select: none;
-            text-align: right;
-            margin-right: 15px;
-        }
-        
-        pre {
-            background: #0d1117;
+        .term {
+            background: #e8f4f8;
             border-radius: 12px;
-            padding: 18px;
-            overflow-x: auto;
+            padding: 15px;
             margin: 15px 0;
-            font-size: 14px;
-            border-left: 4px solid #ff6b6b;
+            border-left: 4px solid #667eea;
         }
         
-        code {
-            font-family: 'Fira Code', 'Courier New', monospace;
-            color: #7ee787;
-            font-size: 13px;
+        .term-name {
+            font-weight: bold;
+            color: #0066cc;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+        
+        .term-desc {
+            margin-top: 8px;
+            color: #555;
         }
         
         .info-box {
-            background: #e8f4f8;
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin: 20px 0;
-            border-left: 4px solid #ff6b6b;
-        }
-        
-        .tip-box {
             background: #fff8e7;
             border-radius: 12px;
             padding: 15px 20px;
@@ -142,187 +116,21 @@
             border-left: 4px solid #ffc107;
         }
         
-        .task-box {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .task-box h3 {
-            margin-top: 0;
-            color: #ff6b6b;
-        }
-        
-        .key-note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            color: #856404;
-            font-size: 13px;
-        }
-        
-        .step-hint {
-            background: #f0f0f0;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin: 15px 0;
-            font-size: 14px;
-        }
-        
-        .step-hint strong {
-            color: #ff6b6b;
-        }
-        
-        .explain-block {
-            background: #e8f4f8;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .explain-block h3 {
-            margin: 0 0 15px;
-            color: #2c3e50;
-            border-bottom: 2px solid #ff6b6b;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-        
-        .param-item {
-            background: white;
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin: 12px 0;
-        }
-        
-        .param-name {
-            font-weight: bold;
-            color: #0066cc;
-            font-family: monospace;
-            font-size: 14px;
-        }
-        
-        .param-desc {
-            color: #555;
-            margin-top: 5px;
-        }
-        
-        .live-demo-section {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .live-demo-section h3 {
-            margin-top: 0;
-            color: #ff6b6b;
-        }
-        
-        .chat-box {
-            background: #f8f9fa;
-            border-radius: 16px;
-            padding: 20px;
-        }
-        
-        .question-area {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .question-area input {
-            flex: 1;
-            padding: 14px 18px;
-            border: 2px solid #ddd;
-            border-radius: 30px;
-            font-size: 16px;
-            background: white;
-        }
-        
-        .question-area input:focus {
-            outline: none;
-            border-color: #ff6b6b;
-        }
-        
-        .question-area button {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .answer-area {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            min-height: 120px;
-            border: 1px solid #e9ecef;
-        }
-        
-        .loading {
-            color: #ff6b6b;
-            font-style: italic;
-        }
-        
-        .error {
-            color: #dc3545;
-            background: #ffe6e6;
-            padding: 12px;
-            border-radius: 12px;
-        }
-        
-        .answer-text {
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        .api-field {
-            margin-top: 20px;
-            padding: 12px;
-            background: #fff3cd;
-            border-radius: 12px;
-        }
-        
-        .api-field input {
+        .table {
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-family: monospace;
-            margin-top: 8px;
+            border-collapse: collapse;
+            margin: 15px 0;
         }
         
-        .hint {
-            color: #999;
-            text-align: center;
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
         
-        .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            transform: scale(1.05);
+        .table th {
+            background: #f0f0f0;
+            color: #333;
         }
         
         hr {
@@ -331,47 +139,56 @@
             border-top: 1px solid #ddd;
         }
         
-        .cheatsheet {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .cheatsheet table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .cheatsheet th, .cheatsheet td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .cheatsheet th {
-            color: #ff6b6b;
-        }
-        
-        .demo-box {
-            background: #e8f4f8;
+        .demo-page {
+            background: white;
             border-radius: 16px;
             padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #ff6b6b;
+            margin: 30px 0;
+            border: 2px solid #667eea;
         }
         
-        .demo-box h3 {
+        .demo-page h3 {
             margin-top: 0;
-            color: #ff6b6b;
         }
         
-        .comparison-table {
+        .demo-area {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .demo-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .demo-btn:hover {
+            background: #218838;
+        }
+        
+        .demo-result {
+            background: #0d1117;
+            color: #e6e6e6;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .comparison {
             display: flex;
             gap: 20px;
-            margin: 20px 0;
             flex-wrap: wrap;
+            margin: 20px 0;
         }
         
         .comparison-card {
@@ -380,348 +197,452 @@
             border-radius: 12px;
             padding: 15px;
             border: 1px solid #e0e0e0;
-            min-width: 200px;
+            min-width: 250px;
         }
         
         .comparison-card h4 {
-            color: #ff6b6b;
+            color: #667eea;
             margin-bottom: 10px;
+        }
+        
+        .note {
+            background: #e8f4f8;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 14px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .btn-up {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-up:hover {
+            background: #5a67d8;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🤖 Практическая работа №2</h1>
-        <div class="subtitle">Создаём AI-помощника, который ищет актуальную информацию в интернете</div>
+        <h1>📚 Асинхронные запросы в JavaScript</h1>
+        <div class="subtitle">Как программы общаются с серверами через интернет</div>
         
-        <div class="toc">
-            <strong>📚 Содержание инструкции:</strong>
-            <a href="#goal">🎯 Задание</a>
-            <a href="#problem">❓ Проблема: устаревшие знания AI</a>
-            <a href="#solution">💡 Решение: Groq Compound</a>
-            <a href="#step1">📁 Шаг 1. Берём за основу первую работу</a>
-            <a href="#step2">🔧 Шаг 2. Меняем модель на Compound</a>
-            <a href="#step3">📊 Шаг 3. Добавляем отображение источников</a>
-            <a href="#explain">📖 Подробный разбор изменений</a>
-            <a href="#examples">💬 Примеры вопросов</a>
-            <a href="#live">🎯 Попробовать прямо сейчас</a>
-            <a href="#cheatsheet">📚 Шпаргалка</a>
-        </div>
+        <!-- ===== ЧАСТЬ 1: СИНХРОННЫЙ VS АСИНХРОННЫЙ КОД ===== -->
+        <h2>📖 Часть 1. Синхронный и асинхронный код</h2>
         
-        <h2 id="goal">🎯 Задание</h2>
-        <div class="info-box">
-            <p>Взять AI-помощника из первой работы и добавить ему возможность <strong>искать актуальную информацию в интернете</strong>.</p>
-            <p>В результате AI сможет отвечать на вопросы о:</p>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>🌍 последних новостях ("Что случилось в мире на этой неделе?")</li>
-                <li>📈 курсах валют и акций ("Сколько сейчас стоит доллар?")</li>
-                <li>🎬 новостях о фильмах, играх, технологиях</li>
-                <li>⏰ любых событиях, которые произошли после обучения AI</li>
-            </ul>
-            <p style="margin-top: 10px;"><strong>Результат:</strong> AI-помощник, который всегда в курсе последних событий!</p>
-        </div>
-        
-        <h2 id="problem">❓ Часть 1. Проблема: устаревшие знания AI</h2>
-        <div class="demo-box">
-            <h3>🤔 В чём ограничение обычного AI?</h3>
-            <p>Модель <strong>Llama 3.3</strong> (как и любой другой LLM) обучалась на данных до определённой даты — примерно до 2024 года [citation:1].</p>
-            <p>Это значит, что она <strong>не знает</strong>:</p>
-            <ul>
-                <li>Какая погода сегодня</li>
-                <li>Кто выиграл вчерашний матч</li>
-                <li>Какие новости произошли на этой неделе</li>
-                <li>Актуальный курс валют</li>
-            </ul>
-            <p>Если спросить обычную Llama 3.3 "Что случилось в мире за последнюю неделю?", она ответит: <strong>"Извините, мои знания ограничены..."</strong></p>
-        </div>
-        
-        <h2 id="solution">💡 Часть 2. Решение: Groq Compound</h2>
-        <div class="info-box">
-            <h3>🚀 Что такое Groq Compound?</h3>
-            <p><strong>Groq Compound</strong> — это специальная система, которая объединяет мощь LLM с возможностью <strong>искать информацию в интернете</strong> и <strong>выполнять код</strong> [citation:3][citation:7].</p>
-            <p>Когда вы задаёте вопрос, Compound сам решает:</p>
-            <ol>
-                <li>Могу ли я ответить из своих знаний?</li>
-                <li>Если нет — нужно ли мне поискать в интернете?</li>
-                <li>Если да — какой поисковый запрос составить?</li>
-            </ol>
-            <p>Всё это происходит <strong>автоматически</strong> на стороне сервера Groq [citation:3]. Вам не нужно подключать отдельные API для поиска!</p>
-        </div>
-        
-        <div class="tip-box">
-            <strong>🔑 Главное отличие от первой работы:</strong>
-            <div class="comparison-table">
-                <div class="comparison-card">
-                    <h4>📝 Первая работа</h4>
-                    <p>model: <code>"llama-3.3-70b-versatile"</code></p>
-                    <p>❌ Не может искать в интернете</p>
-                    <p>❌ Знает только до 2024 года</p>
+        <div class="card">
+            <p><strong>Синхронный код</strong> — выполняется строчка за строчкой. Каждая следующая команда ждёт, пока завершится предыдущая.</p>
+            <div class="code-block">
+                <div class="code-header">📄 Пример синхронного кода</div>
+                <div class="code-content">
+                    <span class="code-line">console.log('1');</span>
+                    <span class="code-line">console.log('2');</span>
+                    <span class="code-line">console.log('3');</span>
+                    <span class="code-line">// Вывод: 1, 2, 3 (по порядку)</span>
                 </div>
-                <div class="comparison-card">
-                    <h4>🌍 Вторая работа</h4>
-                    <p>model: <code>"groq/compound"</code></p>
-                    <p>✅ Может искать в интернете</p>
-                    <p>✅ Знает актуальные новости</p>
+            </div>
+            <p style="margin-top: 15px;"><strong>Асинхронный код</strong> — позволяет выполнять долгие операции (например, ожидание ответа от сервера) "в фоне", не блокируя остальную работу.</p>
+            <div class="note">
+                <strong>🎭 Простая аналогия:</strong> Вы заказываете пиццу по телефону. Синхронно — вы стоите у телефона и ничего не делаете, пока пиццу везут. Асинхронно — вы позвонили, заказали и пошли смотреть фильм. Курьер позвонит, когда приедет.
+            </div>
+        </div>
+        
+        <!-- ===== ЧАСТЬ 2: PROMISE (ОБЕЩАНИЕ) ===== -->
+        <h2>📖 Часть 2. Promise — обещание</h2>
+        
+        <div class="card">
+            <p><strong>Promise</strong> (в переводе "обещание") — это специальный объект в JavaScript, который представляет результат асинхронной операции, который будет получен в будущем.</p>
+            <p>У Promise есть три состояния:</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li><strong>pending</strong> (ожидание) — операция ещё не завершена</li>
+                <li><strong>fulfilled</strong> (выполнено успешно) — операция завершена, есть результат</li>
+                <li><strong>rejected</strong> (отклонено) — операция завершена с ошибкой</li>
+            </ul>
+            <div class="note">
+                <strong>📌 Запомните:</strong> <code>fetch()</code> возвращает Promise. Когда вы пишете <code>await fetch()</code>, вы говорите: "подожди, пока Promise перейдет в состояние fulfilled или rejected".
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Пример Promise</div>
+                <div class="code-content">
+                    <span class="code-line">// fetch() возвращает Promise</span>
+                    <span class="code-line">const promise = fetch('https://api.example.com');</span>
+                    <span class="code-line">console.log(promise); // Promise {&lt;pending&gt;}</span>
+                    <span class="code-line">// Через некоторое время Promise "выполнится" или "отклонится"</span>
                 </div>
             </div>
         </div>
         
-        <h2 id="step1">📁 Шаг 1. Берём за основу первую работу</h2>
-        <p>Открой файл <code>index.html</code>, который ты сделал в первой работе. Мы будем его редактировать.</p>
+        <!-- ===== ЧАСТЬ 3: GET И POST ===== -->
+        <h2>📖 Часть 3. GET и POST — два типа запросов</h2>
         
-        <div class="tip-box">
-            <strong>💡 Совет:</strong> Создай копию файла и назови её <code>compound-assistant.html</code>, чтобы сохранить первую работу.
-        </div>
-        
-        <h2 id="step2">🔧 Шаг 2. Меняем модель на Compound</h2>
-        <p>Самое главное изменение — нужно заменить название модели в коде.</p>
-        
-        <div class="code-block">
-            <div class="code-header">
-                📄 БЫЛО (в первой работе):
+        <div class="comparison">
+            <div class="comparison-card">
+                <h4>📥 GET — получить данные</h4>
+                <p><strong>Что делает:</strong> Запрашивает данные с сервера.</p>
+                <p><strong>Когда использовать:</strong> Получить список, загрузить картинку, узнать погоду.</p>
+                <p><strong>Где данные:</strong> В адресной строке (видно всем).</p>
+                <p><strong>Пример:</strong> <code>GET /users?id=5</code></p>
             </div>
-            <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">2</span>    model: 'llama-3.3-70b-versatile',</span>
-                <span class="code-line"><span class="line-number">3</span>    messages: [...]</span>
-                <span class="code-line"><span class="line-number">4</span>})</span>
+            <div class="comparison-card">
+                <h4>📤 POST — отправить данные</h4>
+                <p><strong>Что делает:</strong> Отправляет данные на сервер.</p>
+                <p><strong>Когда использовать:</strong> Отправить вопрос AI, зарегистрироваться, опубликовать пост.</p>
+                <p><strong>Где данные:</strong> В теле запроса (скрыты).</p>
+                <p><strong>Пример:</strong> <code>POST /users</code> с телом <code>{"name": "Анна"}</code></p>
             </div>
         </div>
         
-        <div class="code-block">
-            <div class="code-header">
-                📄 СТАЛО (с поиском в интернете):
-            </div>
-            <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">2</span>    model: 'groq/compound',   // ← ВОТ ЭТО ГЛАВНОЕ ИЗМЕНЕНИЕ!</span>
-                <span class="code-line"><span class="line-number">3</span>    messages: [...]</span>
-                <span class="code-line"><span class="line-number">4</span>})</span>
-            </div>
-        </div>
+        <!-- ===== ЧАСТЬ 4: FETCH ===== -->
+        <h2>📖 Часть 4. fetch() — главная функция для запросов</h2>
         
-        <div class="step-hint">
-            <strong>📖 Пояснение:</strong><br>
-            • <code>groq/compound</code> — это модель с поддержкой поиска в интернете [citation:3].<br>
-            • Больше ничего менять не нужно! Compound сам решит, когда искать.<br>
-            • Можно также использовать <code>groq/compound-mini</code> — более быструю версию, которая делает один поиск за раз [citation:3].
-        </div>
-        
-        <h2 id="step3">📊 Шаг 3. Добавляем отображение источников (по желанию)</h2>
-        <p>Compound возвращает не только ответ, но и <strong>список источников</strong>, откуда взята информация [citation:6]. Мы можем их отобразить.</p>
-        
-        <div class="code-block">
-            <div class="code-header">
-                📄 Добавляем вывод источников в консоль и на страницу
+        <div class="term">
+            <div class="term-name">fetch(url, options)</div>
+            <div class="term-desc">
+                <strong>Что делает:</strong> Отправляет запрос к серверу и возвращает Promise.
+                <br><br>
+                <strong>Параметры:</strong>
+                <ul style="margin-left: 20px; margin-top: 8px;">
+                    <li><strong>url</strong> — куда отправляем запрос (адрес сервера)</li>
+                    <li><strong>options</strong> — настройки запроса (метод, заголовки, тело) — необязательный параметр</li>
+                </ul>
             </div>
-            <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>// Получаем ответ от API</span>
-                <span class="code-line"><span class="line-number">2</span>const data = await response.json();</span>
-                <span class="code-line"><span class="line-number">3</span>const answer = data.choices[0].message.content;</span>
-                <span class="code-line"><span class="line-number">4</span></span>
-                <span class="code-line"><span class="line-number">5</span>// Получаем информацию о выполненных поисках (если были)</span>
-                <span class="code-line"><span class="line-number">6</span>const executedTools = data.choices[0].message.executed_tools;</span>
-                <span class="code-line"><span class="line-number">7</span></span>
-                <span class="code-line"><span class="line-number">8</span>// Выводим в консоль (для отладки)</span>
-                <span class="code-line"><span class="line-number">9</span>if (executedTools) {</span>
-                <span class="code-line"><span class="line-number">10</span>    console.log('🔍 Использованные поисковые запросы:', executedTools);</span>
-                <span class="code-line"><span class="line-number">11</span>}</span>
-            </div>
-        </div>
-        
-        <h2 id="explain">📖 Подробный разбор изменений</h2>
-        <div class="explain-block">
-            <div class="param-item">
-                <span class="param-name">📌 model: 'groq/compound' — что это?</span>
-                <div class="param-desc">Это специальная модель Groq, которая умеет использовать встроенные инструменты: поиск в интернете и выполнение кода [citation:3]. В отличие от обычной Llama 3.3, она может "выходить" в интернет за актуальной информацией.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Как Compound решает, когда искать?</span>
-                <div class="param-desc">Система анализирует вопрос. Если нужно что-то, что изменилось после 2024 года (курс валют, новости, результаты матчей), она автоматически запускает поиск [citation:3]. Всё происходит на сервере Groq, без дополнительных API-ключей!</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Что такое executed_tools?</span>
-                <div class="param-desc">Это поле в ответе API содержит информацию о том, какие инструменты использовал Compound: какие поисковые запросы были отправлены, сколько результатов найдено, какие источники [citation:6].</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 А если вопрос простой, без поиска?</span>
-                <div class="param-desc">Compound работает как обычная Llama 3.3. Он ответит из своих знаний, не тратя время на поиск. Например, на вопрос "Что такое API?" он ответит сразу.</div>
-            </div>
-        </div>
-        
-        <h2 id="examples">💬 Примеры вопросов для Compound</h2>
-        <div class="tip-box">
-            <p><strong>❓ Вопросы, на которые обычный AI не ответит, а Compound — ответит:</strong></p>
-            <ul>
-                <li>"Какие новости произошли в мире за последние 3 дня?"</li>
-                <li>"Сколько сейчас стоит доллар?"</li>
-                <li>"Кто выиграл последний матч Лиги Чемпионов?"</li>
-                <li>"Что происходит в IT-сфере на этой неделе?"</li>
-                <li>"Какая завтра ожидается погода?" (пример из документации Groq) [citation:3]</li>
-            </ul>
-            <p><strong>✅ Вопросы, на которые Compound ответит без поиска:</strong></p>
-            <ul>
-                <li>"Что такое искусственный интеллект?"</li>
-                <li>"Как работает функция fetch()?"</li>
-                <li>"Объясни теорему Пифагора"</li>
-            </ul>
-        </div>
-        
-        <h2 id="live">🎯 Попробовать прямо сейчас</h2>
-        <div class="live-demo-section">
-            <h3>🌍 AI-помощник с поиском в интернете</h3>
-            <p>Задай вопрос о последних новостях, курсе валют или любом актуальном событии!</p>
-            <p><strong>Примеры:</strong> "Что случилось в мире за последние 3 дня?" или "Сколько сейчас стоит доллар?"</p>
-            
-            <div class="chat-box">
-                <div class="question-area">
-                    <input type="text" id="liveQuestion" placeholder="Например: Какие новости в IT за последнюю неделю?" value="Что случилось в мире за последние 3 дня?">
-                    <button id="liveBtn">🌍 Спросить с поиском</button>
+            <div class="code-block">
+                <div class="code-header">📄 GET-запрос (получить данные)</div>
+                <div class="code-content">
+                    <span class="code-line">fetch('https://api.example.com/users')  // GET запрос по умолчанию</span>
                 </div>
-                
-                <div class="answer-area" id="liveAnswer">
-                    <p class="hint">✏️ Задайте вопрос о последних событиях...</p>
-                </div>
-                
-                <div class="api-field">
-                    <label style="font-weight: bold;">🔑 API-ключ Groq:</label>
-                    <input type="password" id="liveApiKey" placeholder="Вставьте ключ сюда (gsk_...)">
-                    <p style="font-size: 12px; margin-top: 8px;">🔹 Ключ можно получить на <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 POST-запрос (отправить данные)</div>
+                <div class="code-content">
+                    <span class="code-line">fetch('https://api.example.com/users', {</span>
+                    <span class="code-line">    method: 'POST',                         // Указываем метод POST</span>
+                    <span class="code-line">    headers: { 'Content-Type': 'application/json' },  // Говорим, что отправляем JSON</span>
+                    <span class="code-line">    body: JSON.stringify({ name: 'Анна' })  // Данные для отправки</span>
+                    <span class="code-line">})</span>
                 </div>
             </div>
         </div>
         
-        <h2 id="cheatsheet">📚 Шпаргалка: Compound vs Обычная Llama</h2>
-        <div class="cheatsheet">
-            <table>
-                <tr><th>Характеристика</th><th>llama-3.3-70b-versatile</th><th>groq/compound</th></tr>
-                <tr><td>Знания</td><td>Только до 2024 года</td><td>Актуальные (с поиском)</td></tr>
-                <tr><td>Поиск в интернете</td><td>❌ Нет</td><td>✅ Да (автоматически)</td></tr>
-                <tr><td>Скорость</td><td>Очень быстрая</td><td>Быстрая (чуть медленнее из-за поиска)</td></tr>
-                <tr><td>Сложность кода</td><td>Простая</td><td>Такая же! Просто меняем model</td></tr>
-                <tr><td>Требует доп. API</td><td>Нет</td><td>Нет (всё встроено)</td></tr>
-            </table>
+        <!-- ===== ЧАСТЬ 5: ASYNC/AWAIT ===== -->
+        <h2>📖 Часть 5. async / await — как дождаться ответа</h2>
+        
+        <div class="term">
+            <div class="term-name">async и await</div>
+            <div class="term-desc">
+                <strong>async</strong> — ставится перед функцией. Говорит: "внутри этой функции будет await".<br>
+                <strong>await</strong> — ставится перед fetch(). Говорит: "подожди здесь, пока придёт ответ".
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Пример async/await</div>
+                <div class="code-content">
+                    <span class="code-line">// Объявляем асинхронную функцию (слово async)</span>
+                    <span class="code-line"><strong>async</strong> function getUsers() {</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    // Ждём ответ от сервера (слово await)</span>
+                    <span class="code-line">    const response = <strong>await</strong> fetch('https://api.example.com/users');</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    // Ждём, пока ответ превратится в объект</span>
+                    <span class="code-line">    const users = <strong>await</strong> response.json();</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    console.log(users);</span>
+                    <span class="code-line">}</span>
+                </div>
+            </div>
+            <div class="note">
+                <strong>📌 Важно:</strong> Без <code>async</code> нельзя использовать <code>await</code>. Без <code>await</code> вместо ответа вы получите Promise.
+            </div>
         </div>
         
-        <div class="tip-box">
-            <strong>💡 Важно знать о лимитах:</strong>
-            <ul>
-                <li>Бесплатный тариф Groq имеет ограничения: 30 запросов в минуту, 15 000 токенов в минуту [citation:10]</li>
-                <li>Compound может делать несколько поисков за один запрос (например, "groq/compound" поддерживает несколько инструментов) [citation:3]</li>
-                <li>Для более быстрых ответов можно использовать <code>groq/compound-mini</code> — он делает только один поиск за раз</li>
-            </ul>
+        <!-- ===== ЧАСТЬ 6: RESPONSE.JSON() ===== -->
+        <h2>📖 Часть 6. response.json() — превращаем ответ в объект</h2>
+        
+        <div class="term">
+            <div class="term-name">response.json()</div>
+            <div class="term-desc">
+                <strong>Что делает:</strong> Превращает ответ сервера из текста в JavaScript-объект.
+                <br><br>
+                <strong>Зачем:</strong> Сервер присылает данные в виде текста (формат JSON). .json() превращает этот текст в объект, с которым удобно работать.
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Пример response.json()</div>
+                <div class="code-content">
+                    <span class="code-line">// Сервер прислал текст: '{"name": "Иван", "age": 30}'</span>
+                    <span class="code-line">const data = await response.json();</span>
+                    <span class="code-line">// Теперь data — это объект: { name: "Иван", age: 30 }</span>
+                    <span class="code-line">console.log(data.name); // Выведет: "Иван"</span>
+                    <span class="code-line">console.log(data.age);  // Выведет: 30</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== ЧАСТЬ 7: TRY/CATCH ===== -->
+        <h2>📖 Часть 7. try / catch — ловим ошибки</h2>
+        
+        <div class="term">
+            <div class="term-name">try / catch</div>
+            <div class="term-desc">
+                <strong>try</strong> — блок кода, который может вызвать ошибку.<br>
+                <strong>catch</strong> — блок, который выполнится, если в try произошла ошибка.
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Пример try/catch</div>
+                <div class="code-content">
+                    <span class="code-line"><strong>try</strong> {</span>
+                    <span class="code-line">    // Пробуем отправить запрос</span>
+                    <span class="code-line">    const response = await fetch('https://api.example.com/data');</span>
+                    <span class="code-line">    const data = await response.json();</span>
+                    <span class="code-line">    console.log(data);</span>
+                    <span class="code-line"><strong>}</strong> <strong>catch</strong>(error) {</span>
+                    <span class="code-line">    // Если ошибка (нет интернета, неверный адрес) — попадём сюда</span>
+                    <span class="code-line">    console.log('Что-то пошло не так:', error.message);</span>
+                    <span class="code-line">}</span>
+                </div>
+            </div>
+            <div class="note">
+                <strong>📌 Зачем это нужно:</strong> Без try/catch при ошибке программа просто остановится. С try/catch мы можем показать пользователю понятное сообщение.
+            </div>
+        </div>
+        
+        <!-- ===== ЧАСТЬ 8: ПОЛНЫЙ ПРИМЕР ===== -->
+        <h2>📖 Часть 8. Полный пример — как всё работает вместе</h2>
+        
+        <div class="card">
+            <p>Вот как выглядит полная функция, которая отправляет запрос к серверу:</p>
+            <div class="code-block">
+                <div class="code-header">📄 Полный пример</div>
+                <div class="code-content">
+                    <span class="code-line">// 1. Объявляем асинхронную функцию (async)</span>
+                    <span class="code-line"><strong>async</strong> function loadData() {</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    // 2. Оборачиваем в try/catch для обработки ошибок</span>
+                    <span class="code-line">    <strong>try</strong> {</span>
+                    <span class="code-line">        // 3. Отправляем запрос и ждём ответ (await + fetch)</span>
+                    <span class="code-line">        const response = <strong>await</strong> <strong>fetch</strong>('https://api.example.com/data');</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        // 4. Превращаем ответ в объект (await + response.json())</span>
+                    <span class="code-line">        const data = <strong>await</strong> response.<strong>json()</strong>;</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        // 5. Используем полученные данные</span>
+                    <span class="code-line">        console.log(data);</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">    <strong>}</strong> <strong>catch</strong>(error) {</span>
+                    <span class="code-line">        // 6. Обрабатываем ошибку</span>
+                    <span class="code-line">        console.log('Ошибка:', error.message);</span>
+                    <span class="code-line">    }</span>
+                    <span class="code-line">}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== ЧАСТЬ 9: ШПАРГАЛКА ===== -->
+        <h2>📖 Часть 9. Шпаргалка</h2>
+        <table class="table">
+            <thead>
+                <tr><th>Код</th><th>Что делает</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>fetch(url)</code></td><td>GET-запрос (получить данные)</td></tr>
+                <tr><td><code>fetch(url, { method: 'POST', body: ... })</code></td><td>POST-запрос (отправить данные)</td></tr>
+                <tr><td><code>async function name() { ... }</code></td><td>Объявляет асинхронную функцию</td></tr>
+                <tr><td><code>await fetch()</code></td><td>Ждёт ответ от сервера</td></tr>
+                <tr><td><code>await response.json()</code></td><td>Превращает ответ в объект</td></tr>
+                <tr><td><code>try { ... } catch(e) { ... }</code></td><td>Ловит ошибки</td></tr>
+                <tr><td><code>JSON.stringify(object)</code></td><td>Превращает объект в строку для отправки</td></tr>
+            </tbody>
+        </table>
+        
+        <!-- ===== ЧАСТЬ 10: ПРАКТИЧЕСКИЙ ПРИМЕР 1 — ШУТКА ===== -->
+        <h2>📖 Часть 10. Практический пример №1 — GET-запрос (шутка)</h2>
+        
+        <div class="demo-page">
+            <h3>😂 Пример GET-запроса — получить случайную шутку</h3>
+            <p>Используем бесплатный API: <strong>icanhazdadjoke.com</strong> (не требует ключа)</p>
+            <div class="demo-area">
+                <button class="demo-btn" id="getJokeBtn">😂 Получить шутку</button>
+                <div class="demo-result" id="getJokeResult">Нажмите кнопку</div>
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Код страницы для получения шутки (полный HTML)</div>
+                <div class="code-content">
+                    <span class="code-line">&lt;!DOCTYPE html&gt;</span>
+                    <span class="code-line">&lt;html&gt;</span>
+                    <span class="code-line">&lt;head&gt;&lt;title&gt;Получить шутку&lt;/title&gt;&lt;/head&gt;</span>
+                    <span class="code-line">&lt;body&gt;</span>
+                    <span class="code-line">    &lt;button id="jokeBtn"&gt;Получить шутку&lt;/button&gt;</span>
+                    <span class="code-line">    &lt;div id="result"&gt;&lt;/div&gt;</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    &lt;script&gt;</span>
+                    <span class="code-line">        // Находим кнопку и контейнер для результата</span>
+                    <span class="code-line">        const btn = document.getElementById('jokeBtn');</span>
+                    <span class="code-line">        const resultDiv = document.getElementById('result');</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        // Объявляем асинхронную функцию (async)</span>
+                    <span class="code-line">        async function getJoke() {</span>
+                    <span class="code-line">            // Показываем, что загрузка началась</span>
+                    <span class="code-line">            resultDiv.innerHTML = 'Загрузка...';</span>
+                    <span class="code-line">            </span>
+                    <span class="code-line">            // Оборачиваем в try/catch для обработки ошибок</span>
+                    <span class="code-line">            try {</span>
+                    <span class="code-line">                // Отправляем GET-запрос и ждём ответ (await)</span>
+                    <span class="code-line">                const response = await fetch('https://icanhazdadjoke.com/', {</span>
+                    <span class="code-line">                    // Указываем, что хотим получить ответ в формате JSON</span>
+                    <span class="code-line">                    headers: { 'Accept': 'application/json' }</span>
+                    <span class="code-line">                });</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Превращаем ответ в объект (await response.json())</span>
+                    <span class="code-line">                const data = await response.json();</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Показываем шутку на странице</span>
+                    <span class="code-line">                resultDiv.innerHTML = '😂 ' + data.joke;</span>
+                    <span class="code-line">            } catch(error) {</span>
+                    <span class="code-line">                // Если ошибка — показываем сообщение</span>
+                    <span class="code-line">                resultDiv.innerHTML = 'Ошибка: ' + error.message;</span>
+                    <span class="code-line">            }</span>
+                    <span class="code-line">        }</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        // Вешаем обработчик на кнопку</span>
+                    <span class="code-line">        btn.addEventListener('click', getJoke);</span>
+                    <span class="code-line">    &lt;/script&gt;</span>
+                    <span class="code-line">&lt;/body&gt;</span>
+                    <span class="code-line">&lt;/html&gt;</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ===== ЧАСТЬ 11: ПРАКТИЧЕСКИЙ ПРИМЕР 2 — ПОГОДА ===== -->
+        <h2>📖 Часть 11. Практический пример №2 — GET-запрос (погода)</h2>
+        
+        <div class="demo-page">
+            <h3>🌦️ Пример GET-запроса — получить погоду в городе</h3>
+            <p>Используем бесплатный API: <strong>open-meteo.com</strong> (не требует ключа)</p>
+            <div class="demo-area">
+                <input type="text" id="cityInput" placeholder="Город (например, Minsk)" value="Minsk" style="padding: 8px; border-radius: 8px; border: 1px solid #ccc; width: 200px;">
+                <button class="demo-btn" id="getWeatherBtn">🌡️ Узнать погоду</button>
+                <div class="demo-result" id="getWeatherResult">Введите город и нажмите кнопку</div>
+            </div>
+            <div class="code-block">
+                <div class="code-header">📄 Код страницы для получения погоды (полный HTML)</div>
+                <div class="code-content">
+                    <span class="code-line">&lt;!DOCTYPE html&gt;</span>
+                    <span class="code-line">&lt;html&gt;</span>
+                    <span class="code-line">&lt;head&gt;&lt;title&gt;Узнать погоду&lt;/title&gt;&lt;/head&gt;</span>
+                    <span class="code-line">&lt;body&gt;</span>
+                    <span class="code-line">    &lt;input type="text" id="city" placeholder="Город"&gt;</span>
+                    <span class="code-line">    &lt;button id="weatherBtn"&gt;Узнать погоду&lt;/button&gt;</span>
+                    <span class="code-line">    &lt;div id="result"&gt;&lt;/div&gt;</span>
+                    <span class="code-line">    </span>
+                    <span class="code-line">    &lt;script&gt;</span>
+                    <span class="code-line">        const btn = document.getElementById('weatherBtn');</span>
+                    <span class="code-line">        const cityInput = document.getElementById('city');</span>
+                    <span class="code-line">        const resultDiv = document.getElementById('result');</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        // Асинхронная функция для получения погоды</span>
+                    <span class="code-line">        async function getWeather() {</span>
+                    <span class="code-line">            const city = cityInput.value.trim();</span>
+                    <span class="code-line">            if (city === '') return;</span>
+                    <span class="code-line">            </span>
+                    <span class="code-line">            resultDiv.innerHTML = 'Загрузка...';</span>
+                    <span class="code-line">            </span>
+                    <span class="code-line">            try {</span>
+                    <span class="code-line">                // ШАГ 1: Получаем координаты города</span>
+                    <span class="code-line">                // encodeURIComponent() — заменяет пробелы и спецсимволы</span>
+                    <span class="code-line">                const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&format=json`;</span>
+                    <span class="code-line">                const geoResponse = await fetch(geoUrl);</span>
+                    <span class="code-line">                const geoData = await geoResponse.json();</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Проверяем, нашёлся ли город</span>
+                    <span class="code-line">                if (!geoData.results) {</span>
+                    <span class="code-line">                    resultDiv.innerHTML = 'Город не найден';</span>
+                    <span class="code-line">                    return;</span>
+                    <span class="code-line">                }</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Берём широту и долготу первого найденного города</span>
+                    <span class="code-line">                const lat = geoData.results[0].latitude;</span>
+                    <span class="code-line">                const lon = geoData.results[0].longitude;</span>
+                    <span class="code-line">                const cityName = geoData.results[0].name;</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // ШАГ 2: Получаем погоду по координатам</span>
+                    <span class="code-line">                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;</span>
+                    <span class="code-line">                const weatherResponse = await fetch(weatherUrl);</span>
+                    <span class="code-line">                const weatherData = await weatherResponse.json();</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Достаём температуру и скорость ветра</span>
+                    <span class="code-line">                const temp = weatherData.current_weather.temperature;</span>
+                    <span class="code-line">                const wind = weatherData.current_weather.windspeed;</span>
+                    <span class="code-line">                </span>
+                    <span class="code-line">                // Показываем результат</span>
+                    <span class="code-line">                resultDiv.innerHTML = `🌡️ ${cityName}: ${temp}°C, ветер ${wind} км/ч`;</span>
+                    <span class="code-line">            } catch(error) {</span>
+                    <span class="code-line">                resultDiv.innerHTML = 'Ошибка: ' + error.message;</span>
+                    <span class="code-line">            }</span>
+                    <span class="code-line">        }</span>
+                    <span class="code-line">        </span>
+                    <span class="code-line">        btn.addEventListener('click', getWeather);</span>
+                    <span class="code-line">    &lt;/script&gt;</span>
+                    <span class="code-line">&lt;/body&gt;</span>
+                    <span class="code-line">&lt;/html&gt;</span>
+                </div>
+            </div>
         </div>
         
         <hr>
         
-        <div style="text-align: center; padding: 20px;">
-            <h3>🎉 Поздравляю! Ты создал AI-помощника с доступом к интернету!</h3>
-            <p style="margin: 20px 0;">Теперь твой AI может отвечать на актуальные вопросы, искать новости и всегда быть в курсе последних событий!</p>
-            <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Наверх</button>
+        <div style="text-align: center;">
+            <button class="btn-up" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Наверх</button>
         </div>
         
     </div>
     
     <script>
-        // Живой пример — Compound Assistant с поиском
-        document.addEventListener('DOMContentLoaded', function() {
-            const liveBtn = document.getElementById('liveBtn');
-            const liveQuestion = document.getElementById('liveQuestion');
-            const liveAnswer = document.getElementById('liveAnswer');
-            const liveApiKey = document.getElementById('liveApiKey');
-            
-            if (localStorage.getItem('groq_api_key_compound')) {
-                liveApiKey.value = localStorage.getItem('groq_api_key_compound');
+        // Пример 1: GET - шутка
+        document.getElementById('getJokeBtn').addEventListener('click', async function() {
+            const resultDiv = document.getElementById('getJokeResult');
+            resultDiv.innerHTML = '⏳ Загрузка...';
+            try {
+                const response = await fetch('https://icanhazdadjoke.com/', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                const data = await response.json();
+                resultDiv.innerHTML = '😂 ' + data.joke;
+            } catch(error) {
+                resultDiv.innerHTML = '❌ Ошибка: ' + error.message;
             }
-            liveApiKey.addEventListener('change', function() {
-                localStorage.setItem('groq_api_key_compound', liveApiKey.value);
-            });
-            
-            // Системный промпт — можно оставить простым, Compound сам разберётся
-            const systemPrompt = `Ты полезный AI-помощник. Отвечай на русском языке, дружелюбно и понятно. Если нужна актуальная информация — используй поиск в интернете.`;
-            
-            async function askAI() {
-                let question = liveQuestion.value.trim();
-                
-                if (question === '') {
-                    liveAnswer.innerHTML = '<p class="error">❌ Пожалуйста, введи вопрос!</p>';
+        });
+        
+        // Пример 2: GET - погода
+        document.getElementById('getWeatherBtn').addEventListener('click', async function() {
+            const city = document.getElementById('cityInput').value.trim();
+            const resultDiv = document.getElementById('getWeatherResult');
+            resultDiv.innerHTML = '⏳ Получение погоды...';
+            try {
+                const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;
+                const geoRes = await fetch(geoUrl);
+                const geoData = await geoRes.json();
+                if (!geoData.results) {
+                    resultDiv.innerHTML = '❌ Город не найден';
                     return;
                 }
-                
-                let apiKey = liveApiKey.value.trim();
-                if (apiKey === '') {
-                    liveAnswer.innerHTML = '<p class="error">❌ Вставьте API-ключ Groq в поле выше!</p>';
-                    return;
-                }
-                
-                liveAnswer.innerHTML = '<div class="loading">🌍 AI ищет актуальную информацию в интернете... <span style="font-size:12px;">(может занять 5-10 секунд)</span></div>';
-                
-                try {
-                    // ГЛАВНОЕ ИЗМЕНЕНИЕ: используем model: 'groq/compound'
-                    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${apiKey}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            model: 'groq/compound',  // ← ВОТ ЭТО КЛЮЧЕВОЕ ИЗМЕНЕНИЕ!
-                            messages: [
-                                { role: 'system', content: systemPrompt },
-                                { role: 'user', content: question }
-                            ],
-                            temperature: 0.7,
-                            max_tokens: 500
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error?.message || `Ошибка ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    const answer = data.choices[0].message.content;
-                    
-                    // Получаем информацию о поиске (если был)
-                    const executedTools = data.choices[0].message?.executed_tools;
-                    let toolsHtml = '';
-                    if (executedTools && executedTools.length > 0) {
-                        toolsHtml = '<hr style="margin: 15px 0;"><small style="color: #999;">🔍 Использован поиск в интернете для получения актуальной информации</small>';
-                        // Выводим в консоль детали поиска (для отладки)
-                        console.log('🔍 Поисковые запросы:', executedTools);
-                    }
-                    
-                    liveAnswer.innerHTML = `
-                        <div class="answer-text">
-                            <strong>🌍 AI (с поиском):</strong><br>
-                            ${answer}
-                        </div>
-                        ${toolsHtml}
-                        <small style="color: #999; display: block; margin-top: 10px;">✨ Модель: Groq Compound (с поддержкой поиска в интернете)</small>
-                    `;
-                    
-                } catch (error) {
-                    console.error('Ошибка:', error);
-                    liveAnswer.innerHTML = `
-                        <div class="error">
-                            ❌ Ошибка: ${error.message}<br><br>
-                            🔍 Проверьте:<br>
-                            • Правильно ли вставлен API-ключ?<br>
-                            • Есть ли интернет?<br>
-                            • Поддерживает ли ваш ключ Compound? (Нужен обычный ключ Groq)
-                        </div>
-                    `;
-                }
+                const lat = geoData.results[0].latitude;
+                const lon = geoData.results[0].longitude;
+                const cityName = geoData.results[0].name;
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+                const weatherRes = await fetch(weatherUrl);
+                const weatherData = await weatherRes.json();
+                const temp = weatherData.current_weather.temperature;
+                const wind = weatherData.current_weather.windspeed;
+                resultDiv.innerHTML = `🌡️ ${cityName}: ${temp}°C, ветер ${wind} км/ч`;
+            } catch(error) {
+                resultDiv.innerHTML = '❌ Ошибка: ' + error.message;
             }
-            
-            liveBtn.addEventListener('click', askAI);
-            liveQuestion.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') askAI();
-            });
         });
     </script>
 </body>
