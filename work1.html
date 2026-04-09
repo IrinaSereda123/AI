@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Работа №1 — Простой AI-помощник</title>
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        /* Блок с заданием */
+        .task-block {
+            background: #fff8e7;
+            border-left: 6px solid #ffc107;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+        }
+        .task-block h2 {
+            margin: 0 0 10px;
+            color: #856404;
+        }
+        /* Основной блок чата */
+        .chat-box {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        /* Поле ввода */
+        .question-area {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .question-area input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        .question-area input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .question-area button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .question-area button:hover {
+            background: #5a67d8;
+        }
+        /* Блок с ответом */
+        .answer-area {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 120px;
+            border: 1px solid #e9ecef;
+        }
+        .loading {
+            color: #667eea;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #ffe6e6;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .answer-text {
+            line-height: 1.6;
+            color: #333;
+        }
+        .answer-text strong {
+            color: #667eea;
+        }
+        /* Блок с пояснениями */
+        .explain-block {
+            background: #e8f4f8;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .explain-block h3 {
+            margin: 0 0 15px;
+            color: #2c3e50;
+            border-bottom: 2px solid #00bcd4;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .param-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin: 12px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #0066cc;
+        }
+        .param-desc {
+            color: #555;
+            margin-top: 5px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #ddd;
+        }
+        .btn-back {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <!-- ===== БЛОК С ЗАДАНИЕМ ===== -->
+    <div class="task-block">
+        <h2>📋 Задание №1: Простой AI-помощник</h2>
+        <p><strong>Цель:</strong> Научиться подключаться к API нейросети, отправлять вопросы и получать ответы.</p>
+        <p><strong>Что делаем:</strong> Создаём чат-бота, который отвечает на вопросы пользователя через модель <strong>Llama 3.3</strong> (бесплатно через Groq).</p>
+        <p><strong>Результат:</strong> Рабочий AI-бот на вашей странице.</p>
+    </div>
+
+    <!-- ===== ЧАТ ===== -->
+    <div class="chat-box">
+        <h2 style="margin-top: 0;">🤖 AI-помощник</h2>
+        <p style="color: #666;">Задайте любой вопрос — я постараюсь ответить понятно!</p>
+        
+        <div class="question-area">
+            <input type="text" id="userQuestion" placeholder="Например: Что такое искусственный интеллект?" value="Что такое API?">
+            <button id="sendBtn">📨 Отправить</button>
+        </div>
+        
+        <div class="answer-area" id="answerBlock">
+            <p style="color: #999;">✏️ Напишите вопрос и нажмите "Отправить"...</p>
+        </div>
+        
+        <!-- Поле для API-ключа (чтобы студент сам вставил) -->
+        <div style="margin-top: 20px; padding: 12px; background: #fff3cd; border-radius: 12px;">
+            <label style="font-weight: bold;">🔑 Ваш API-ключ Groq:</label>
+            <input type="password" id="apiKeyInput" placeholder="Вставьте ключ сюда (gsk_...)" style="width: 100%; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: monospace;">
+            <p style="font-size: 12px; margin-top: 8px;">🔹 Ключ можно получить на <a href="https://console.groq.com" target="_blank">console.groq.com</a> (регистрация → API Keys)</p>
+        </div>
+    </div>
+
+    <!-- ===== БЛОК С ПОЯСНЕНИЯМИ ===== -->
+    <div class="explain-block">
+        <h3>📖 Что означает каждая строчка кода?</h3>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 fetch('https://api.groq.com/openai/v1/chat/completions')</span>
+            <div class="param-desc">Отправляет HTTP-запрос к серверу Groq. Это как "позвонить" нейросети и задать вопрос.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 method: 'POST'</span>
+            <div class="param-desc">Тип запроса. POST значит "я отправляю данные на сервер" (в отличие от GET — "дай мне данные").</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 headers: { 'Authorization': `Bearer ${apiKey}` }</span>
+            <div class="param-desc">Передаём API-ключ. Это как пропуск — сервер проверяет, что вы зарегистрированы и можете пользоваться сервисом.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [...] })</span>
+            <div class="param-desc">Тело запроса. Внутри указываем: какую модель использовать (llama-3.3), какие сообщения передаём (системная инструкция + вопрос пользователя).</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 temperature: 0.7</span>
+            <div class="param-desc">"Творчество" AI. От 0 до 1. Чем выше, тем более неожиданные и креативные ответы. 0.7 — золотая середина.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 max_tokens: 150</span>
+            <div class="param-desc">Максимальная длина ответа в "токенах" (кусочках слов). 150 токенов ≈ 100-120 слов.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 async / await</span>
+            <div class="param-desc">Специальные слова для работы с запросами. "async" говорит: "функция будет ждать ответа". "await" говорит: "подожди здесь, пока придёт ответ".</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 try { ... } catch (error) { ... }</span>
+            <div class="param-desc">Ловим ошибки. Если что-то пошло не так (нет интернета, неверный ключ), программа не упадёт, а покажет понятное сообщение.</div>
+        </div>
+    </div>
+    
+    <a href="index.html" class="btn-back">← Назад к списку работ</a>
+</div>
+
+<script>
+    // Ждём загрузки страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        // Находим элементы на странице
+        const sendButton = document.getElementById('sendBtn');
+        const questionInput = document.getElementById('userQuestion');
+        const answerBlock = document.getElementById('answerBlock');
+        const apiKeyInput = document.getElementById('apiKeyInput');
+        
+        // Системный промпт — инструкция для AI, как себя вести
+        const systemPrompt = `Ты дружелюбный помощник. Отвечай кратко (2-4 предложения), понятно, с примерами. Используй русский язык.`;
+        
+        // Функция отправки вопроса к AI
+        async function askAI() {
+            // Берём вопрос из поля ввода
+            let question = questionInput.value.trim();
+            
+            // Если вопрос пустой
+            if (question === '') {
+                answerBlock.innerHTML = '<p class="error">❌ Напишите вопрос в поле выше!</p>';
+                return;
+            }
+            
+            // Берём API-ключ (если не вставлен — ошибка)
+            let apiKey = apiKeyInput.value.trim();
+            if (apiKey === '') {
+                answerBlock.innerHTML = '<p class="error">❌ Вставьте API-ключ Groq в поле выше!</p>';
+                return;
+            }
+            
+            // Показываем, что AI думает
+            answerBlock.innerHTML = '<div class="loading">🤔 AI анализирует вопрос... <span style="font-size:12px;">(может занять 3-5 секунд)</span></div>';
+            
+            try {
+                // Отправляем запрос к Groq API
+                const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,      // Передаём ключ
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',        // Какая модель
+                        messages: [
+                            { role: 'system', content: systemPrompt },   // Инструкция для AI
+                            { role: 'user', content: question }          // Вопрос пользователя
+                        ],
+                        temperature: 0.7,                         // Уровень творчества
+                        max_tokens: 200                           // Максимум слов в ответе
+                    })
+                });
+                
+                // Проверяем, успешно ли прошёл запрос
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error?.message || `Ошибка ${response.status}`);
+                }
+                
+                // Получаем ответ в формате JSON
+                const data = await response.json();
+                // Достаём текст ответа
+                const aiAnswer = data.choices[0].message.content;
+                
+                // Показываем ответ на странице
+                answerBlock.innerHTML = `
+                    <div class="answer-text">
+                        <strong>🤖 AI отвечает:</strong><br>
+                        ${aiAnswer}
+                    </div>
+                    <hr style="margin: 15px 0;">
+                    <small style="color: #999;">✨ Модель: Llama 3.3 70B (через Groq) | Токенов: ${data.usage?.total_tokens || '?'}</small>
+                `;
+                
+            } catch (error) {
+                // Если произошла ошибка
+                console.error('Ошибка:', error);
+                answerBlock.innerHTML = `
+                    <div class="error">
+                        ❌ Ошибка: ${error.message}<br><br>
+                        🔍 Проверьте:<br>
+                        • Правильно ли вставлен API-ключ?<br>
+                        • Есть ли интернет?<br>
+                        • Не заблокирован ли сайт?
+                    </div>
+                `;
+            }
+        }
+        
+        // Вешаем обработчик на кнопку
+        sendButton.addEventListener('click', askAI);
+        
+        // Отправка по нажатию Enter
+        questionInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                askAI();
+            }
+        });
+        
+        // Небольшая подсказка: сохраняем ключ в localStorage, чтобы не вводить каждый раз
+        if (localStorage.getItem('groq_api_key')) {
+            apiKeyInput.value = localStorage.getItem('groq_api_key');
+        }
+        apiKeyInput.addEventListener('change', function() {
+            localStorage.setItem('groq_api_key', apiKeyInput.value);
+        });
+    });
+</script>
+</body>
+</html>
