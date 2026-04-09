@@ -216,9 +216,9 @@
         <div class="tip-box">
             <ol>
                 <li>Вы спрашиваете: <strong>"Какая погода в Минске?"</strong></li>
-                <li>AI понимает, что нужна погода, и говорит: <strong>"Вызови функцию get_weather с городом Минск"</strong></li>
-                <li>Наш код идёт на сайт <strong>open-meteo.com</strong> и получает реальную погоду</li>
-                <li>AI красиво оформляет ответ и показывает вам</li>
+                <li>AI понимает, что нужна погода, и говорит: <strong>"Вызови функцию get_weather с городом Минск".</strong></li>
+                <li>Наш код идёт на сайт <strong>open-meteo.com</strong> и получает реальную погоду.</li>
+                <li>AI красиво оформляет ответ и показывает вам.</li>
             </ol>
             <p style="margin-top: 10px;">Всё, что нужно — добавить в код 3 простые вещи.</p>
         </div>
@@ -226,7 +226,7 @@
         <h2>🔧 Что нужно добавить в код</h2>
         
         <div class="step-hint">
-            <strong>Шаг 1. Добавьте эту функцию (она ходит за погодой)</strong>
+            <strong>Шаг 1. Добавьте эту функцию (получения погоды)</strong>
             <p>Вставьте этот код куда-нибудь в script.js (например, после systemPrompt):</p>
         </div>
         
@@ -283,7 +283,7 @@
         
         <div class="step-hint">
             <strong>Шаг 3. Измените функцию askAI()</strong>
-            <p>Замените старую функцию askAI() на эту (добавлено всего 10 новых строк):</p>
+            <p>Замените старую функцию askAI() на эту (добавлено всего 9 новых строк):</p>
         </div>
         
         <div class="code-block">
@@ -366,10 +366,10 @@
         <div class="tip-box">
             <strong>💡 Что означают добавленные строки:</strong>
             <ul>
-                <li><strong>tools: [weatherTool]</strong> — говорим AI, что у него есть инструмент "погода"</li>
-                <li><strong>tool_choice: 'auto'</strong> — разрешаем AI самому решать, вызывать инструмент или нет</li>
-                <li><strong>if (message.tool_calls)</strong> — проверяем, вызвал ли AI функцию</li>
-                <li><strong>getWeather(city)</strong> — наша функция, которая ходит на open-meteo.com</li>
+                <li><strong>tools: [weatherTool]</strong> — говорим AI, что у него есть инструмент "погода".</li>
+                <li><strong>tool_choice: 'auto'</strong> — разрешаем AI самому решать, вызывать инструмент или нет.</li>
+                <li><strong>if (message.tool_calls)</strong> — проверяем, вызвал ли AI функцию.</li>
+                <li><strong>getWeather(city)</strong> — наша функция, которая ходит на open-meteo.com.</li>
             </ul>
         </div>
         
