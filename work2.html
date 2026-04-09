@@ -2,8 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📖 Практическая работа №2 — Добавляем AI-помощнику реальную погоду</title>
+    <title>📖 Практическая работа №2 — Добавляем погоду</title>
     <style>
         * {
             margin: 0;
@@ -15,17 +14,16 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #eef2f7;
             color: #333;
-            line-height: 1.7;
             padding: 30px 20px;
         }
         
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             text-align: center;
             margin-bottom: 10px;
             color: #1a1a2e;
@@ -34,41 +32,15 @@
         .subtitle {
             text-align: center;
             color: #666;
-            margin-bottom: 40px;
-            font-size: 1.1rem;
+            margin-bottom: 30px;
         }
         
         h2 {
-            font-size: 1.8rem;
-            margin: 30px 0 20px;
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
             padding-left: 15px;
             border-left: 5px solid #00bcd4;
             color: #2c3e50;
-        }
-        
-        h3 {
-            font-size: 1.3rem;
-            margin: 25px 0 15px;
-            color: #00bcd4;
-        }
-        
-        .toc {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .toc a {
-            color: #00bcd4;
-            text-decoration: none;
-            display: block;
-            margin: 8px 0;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
         }
         
         .code-block {
@@ -81,18 +53,18 @@
         
         .code-header {
             background: #161b22;
-            padding: 10px 15px;
+            padding: 8px 15px;
             border-bottom: 1px solid #30363d;
             font-family: monospace;
-            font-size: 13px;
+            font-size: 12px;
             color: #feca57;
         }
         
         .code-content {
             padding: 15px;
-            font-family: 'Fira Code', 'Courier New', monospace;
+            font-family: monospace;
             font-size: 13px;
-            line-height: 1.6;
+            line-height: 1.5;
             color: #e6e6e6;
         }
         
@@ -103,7 +75,7 @@
         
         .line-number {
             display: inline-block;
-            width: 45px;
+            width: 40px;
             color: #6e7681;
             user-select: none;
             text-align: right;
@@ -126,29 +98,6 @@
             border-left: 4px solid #ffc107;
         }
         
-        .task-box {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .task-box h3 {
-            margin-top: 0;
-            color: #00bcd4;
-        }
-        
-        .key-note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            color: #856404;
-            font-size: 13px;
-        }
-        
         .step-hint {
             background: #f0f0f0;
             border-radius: 8px;
@@ -157,56 +106,12 @@
             font-size: 14px;
         }
         
-        .step-hint strong {
-            color: #00bcd4;
-        }
-        
-        .explain-block {
-            background: #e8f4f8;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .explain-block h3 {
-            margin: 0 0 15px;
-            color: #2c3e50;
-            border-bottom: 2px solid #00bcd4;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-        
-        .param-item {
-            background: white;
-            border-radius: 12px;
-            padding: 12px 15px;
-            margin: 12px 0;
-        }
-        
-        .param-name {
-            font-weight: bold;
-            color: #0066cc;
-            font-family: monospace;
-            font-size: 14px;
-        }
-        
-        .param-desc {
-            color: #555;
-            margin-top: 5px;
-        }
-        
         .live-demo-section {
             background: white;
             border-radius: 16px;
             padding: 20px;
             margin: 20px 0;
             border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .live-demo-section h3 {
-            margin-top: 0;
-            color: #00bcd4;
         }
         
         .chat-box {
@@ -217,30 +122,24 @@
         
         .question-area {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
         
         .question-area input {
             flex: 1;
-            padding: 14px 18px;
+            padding: 12px 16px;
             border: 2px solid #ddd;
             border-radius: 30px;
             font-size: 16px;
-            background: white;
-        }
-        
-        .question-area input:focus {
-            outline: none;
-            border-color: #00bcd4;
         }
         
         .question-area button {
             background: #00bcd4;
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 30px;
             cursor: pointer;
             font-weight: bold;
@@ -250,8 +149,7 @@
             background: white;
             border-radius: 16px;
             padding: 20px;
-            min-height: 120px;
-            border: 1px solid #e9ecef;
+            min-height: 100px;
         }
         
         .loading {
@@ -262,61 +160,40 @@
         .error {
             color: #dc3545;
             background: #ffe6e6;
-            padding: 12px;
-            border-radius: 12px;
-        }
-        
-        .answer-text {
-            line-height: 1.6;
-            color: #333;
+            padding: 10px;
+            border-radius: 8px;
         }
         
         .weather-info {
             background: #d1ecf1;
             border-left: 4px solid #00bcd4;
-            padding: 12px;
+            padding: 10px;
             margin: 10px 0;
             border-radius: 8px;
-            font-family: monospace;
-            font-size: 14px;
         }
         
         .api-field {
-            margin-top: 20px;
-            padding: 12px;
+            margin-top: 15px;
+            padding: 10px;
             background: #fff3cd;
-            border-radius: 12px;
+            border-radius: 8px;
         }
         
         .api-field input {
             width: 100%;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 8px;
+            border-radius: 6px;
             border: 1px solid #ccc;
-            font-family: monospace;
-            margin-top: 8px;
-        }
-        
-        .hint {
-            color: #999;
-            text-align: center;
+            margin-top: 5px;
         }
         
         .btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #00bcd4, #0097a7);
+            background: #00bcd4;
             color: white;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s;
             border: none;
             cursor: pointer;
-        }
-        
-        .btn:hover {
-            transform: scale(1.05);
         }
         
         hr {
@@ -324,653 +201,219 @@
             border: none;
             border-top: 1px solid #ddd;
         }
-        
-        .cheatsheet {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 1px solid #e0e0e0;
-        }
-        
-        .cheatsheet table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .cheatsheet th, .cheatsheet td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .cheatsheet th {
-            color: #00bcd4;
-        }
-        
-        .example-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        
-        .example-btn {
-            background: #e9ecef;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-        
-        .example-btn:hover {
-            background: #dee2e6;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🌤️ Практическая работа №2</h1>
-        <div class="subtitle">Учим AI самостоятельно узнавать реальную погоду через Open-Meteo</div>
+        <div class="subtitle">Учим AI узнавать реальную погоду</div>
         
-        <div class="toc">
-            <strong>📚 Содержание инструкции:</strong>
-            <a href="#goal">🎯 Задание</a>
-            <a href="#howitworks">⚙️ Как это работает</a>
-            <a href="#step1">📁 Шаг 1. Функция получения погоды</a>
-            <a href="#step2">🔧 Шаг 2. Описание инструмента для AI</a>
-            <a href="#step3">🔄 Шаг 3. Обработка вызова функции</a>
-            <a href="#step4">📝 Шаг 4. Полный код</a>
-            <a href="#explain">📖 Пояснение каждой строки</a>
-            <a href="#live">🎯 Попробовать прямо сейчас</a>
-            <a href="#cheatsheet">📚 Шпаргалка</a>
-        </div>
-        
-        <h2 id="goal">🎯 Задание</h2>
         <div class="info-box">
-            <p>Добавить AI-помощнику возможность <strong>самостоятельно узнавать реальную погоду</strong> через интернет.</p>
-            <p>В результате AI сможет:</p>
-            <ul style="margin-left: 20px; margin-top: 10px;">
-                <li>🌤️ отвечать на вопрос "Какая погода в Минске?" с реальными данными</li>
-                <li>🌍 работать с любыми городами мира</li>
-                <li>🤔 сам понимать, когда нужно использовать погоду, а когда ответить как обычно</li>
-            </ul>
+            <strong>🎯 Задание:</strong> Добавить к AI-помощнику из первой работы возможность отвечать на вопросы о погоде с реальными данными.
         </div>
         
-        <h2 id="howitworks">⚙️ Как это работает (очень важно понять!)</h2>
+        <h2>📖 Как это работает (очень просто)</h2>
         <div class="tip-box">
-            <p><strong>Обычный AI</strong> не знает погоду. Он обучен на старых данных.</p>
-            <p><strong>Мы научим AI</strong> распознавать, когда его спрашивают о погоде, и вместо того чтобы отвечать самому — вызывать специальную функцию, которая сходит в интернет за реальными данными.</p>
-            <p>Это называется <strong>Function Calling (вызов функций)</strong>.</p>
-        </div>
-        
-        <div class="step-hint">
-            <strong>📖 Схема работы:</strong>
             <ol>
-                <li>Пользователь пишет: <strong>"Какая погода в Минске?"</strong></li>
-                <li>AI получает вопрос и понимает: "Для ответа мне нужна погода"</li>
-                <li>AI возвращает <strong>не ответ</strong>, а <strong>команду</strong>: "Вызови функцию get_weather с параметром city='Minsk'"</li>
-                <li>Наш код видит эту команду, идёт на сайт <strong>Open-Meteo</strong> и получает реальную погоду</li>
-                <li>Отдаём результат обратно AI, чтобы он красиво оформил ответ</li>
-                <li>Пользователь получает: <strong>"В Минске сейчас +15°C, облачно"</strong></li>
+                <li>Вы спрашиваете: <strong>"Какая погода в Минске?"</strong></li>
+                <li>AI понимает, что нужна погода, и говорит: <strong>"Вызови функцию get_weather с городом Минск"</strong></li>
+                <li>Наш код идёт на сайт <strong>open-meteo.com</strong> и получает реальную погоду</li>
+                <li>AI красиво оформляет ответ и показывает вам</li>
             </ol>
+            <p style="margin-top: 10px;">Всё, что нужно — добавить в код 3 простые вещи.</p>
         </div>
         
-        <h2 id="step1">📁 Шаг 1. Добавляем функцию получения погоды</h2>
-        <p>В файл <code>script.js</code> нужно добавить функцию, которая будет ходить на <strong>Open-Meteo API</strong> (бесплатный сервис погоды, не требует ключа).</p>
+        <h2>🔧 Что нужно добавить в код</h2>
+        
+        <div class="step-hint">
+            <strong>Шаг 1. Добавьте эту функцию (она ходит за погодой)</strong>
+            <p>Вставьте этот код куда-нибудь в script.js (например, после systemPrompt):</p>
+        </div>
         
         <div class="code-block">
             <div class="code-header">
-                📄 Добавить в начало script.js (после объявления переменных)
+                📄 Функция получения погоды (копируем полностью)
             </div>
             <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>// ===== ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ РЕАЛЬНОЙ ПОГОДЫ =====</span>
-                <span class="code-line"><span class="line-number">2</span>async function getRealWeather(city) {</span>
-                <span class="code-line"><span class="line-number">3</span>    try {</span>
-                <span class="code-line"><span class="line-number">4</span>        // ШАГ 1: Получаем координаты города (широту и долготу)</span>
-                <span class="code-line"><span class="line-number">5</span>        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;</span>
-                <span class="code-line"><span class="line-number">6</span>        const geoResponse = await fetch(geoUrl);</span>
-                <span class="code-line"><span class="line-number">7</span>        const geoData = await geoResponse.json();</span>
-                <span class="code-line"><span class="line-number">8</span>        </span>
-                <span class="code-line"><span class="line-number">9</span>        // Если город не найден</span>
-                <span class="code-line"><span class="line-number">10</span>        if (!geoData.results || geoData.results.length === 0) {</span>
-                <span class="code-line"><span class="line-number">11</span>            return `Город "${city}" не найден. Попробуйте написать на английском.`;</span>
+                <span class="code-line"><span class="line-number">1</span>async function getWeather(city) {</span>
+                <span class="code-line"><span class="line-number">2</span>    try {</span>
+                <span class="code-line"><span class="line-number">3</span>        const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=ru&format=json`;</span>
+                <span class="code-line"><span class="line-number">4</span>        const geoRes = await fetch(geoUrl);</span>
+                <span class="code-line"><span class="line-number">5</span>        const geoData = await geoRes.json();</span>
+                <span class="code-line"><span class="line-number">6</span>        if (!geoData.results) return `Город ${city} не найден`;</span>
+                <span class="code-line"><span class="line-number">7</span>        const lat = geoData.results[0].latitude;</span>
+                <span class="code-line"><span class="line-number">8</span>        const lon = geoData.results[0].longitude;</span>
+                <span class="code-line"><span class="line-number">9</span>        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;</span>
+                <span class="code-line"><span class="line-number">10</span>        const weatherRes = await fetch(weatherUrl);</span>
+                <span class="code-line"><span class="line-number">11</span>        const weatherData = await weatherRes.json();</span>
+                <span class="code-line"><span class="line-number">12</span>        const temp = weatherData.current_weather.temperature;</span>
+                <span class="code-line"><span class="line-number">13</span>        const wind = weatherData.current_weather.windspeed;</span>
+                <span class="code-line"><span class="line-number">14</span>        return `🌡️ ${temp}°C, ветер ${wind} км/ч`;</span>
+                <span class="code-line"><span class="line-number">15</span>    } catch(e) { return "Ошибка получения погоды"; }</span>
+                <span class="code-line"><span class="line-number">16</span>}</span>
+            </div>
+        </div>
+        
+        <div class="step-hint">
+            <strong>Шаг 2. Опишите инструмент для AI</strong>
+            <p>Вставьте этот код ПОД функцией getWeather:</p>
+        </div>
+        
+        <div class="code-block">
+            <div class="code-header">
+                📄 Описание инструмента (что умеет AI)
+            </div>
+            <div class="code-content">
+                <span class="code-line"><span class="line-number">1</span>const weatherTool = {</span>
+                <span class="code-line"><span class="line-number">2</span>    type: "function",</span>
+                <span class="code-line"><span class="line-number">3</span>    function: {</span>
+                <span class="code-line"><span class="line-number">4</span>        name: "get_weather",</span>
+                <span class="code-line"><span class="line-number">5</span>        description: "Получает погоду в городе",</span>
+                <span class="code-line"><span class="line-number">6</span>        parameters: {</span>
+                <span class="code-line"><span class="line-number">7</span>            type: "object",</span>
+                <span class="code-line"><span class="line-number">8</span>            properties: {</span>
+                <span class="code-line"><span class="line-number">9</span>                city: { type: "string", description: "Название города" }</span>
+                <span class="code-line"><span class="line-number">10</span>            },</span>
+                <span class="code-line"><span class="line-number">11</span>            required: ["city"]</span>
                 <span class="code-line"><span class="line-number">12</span>        }</span>
-                <span class="code-line"><span class="line-number">13</span>        </span>
-                <span class="code-line"><span class="line-number">14</span>        // Берём первый найденный город</span>
-                <span class="code-line"><span class="line-number">15</span>        const location = geoData.results[0];</span>
-                <span class="code-line"><span class="line-number">16</span>        const lat = location.latitude;</span>
-                <span class="code-line"><span class="line-number">17</span>        const lon = location.longitude;</span>
-                <span class="code-line"><span class="line-number">18</span>        const cityName = location.name;</span>
-                <span class="code-line"><span class="line-number">19</span>        </span>
-                <span class="code-line"><span class="line-number">20</span>        // ШАГ 2: Получаем погоду по координатам</span>
-                <span class="code-line"><span class="line-number">21</span>        const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;</span>
-                <span class="code-line"><span class="line-number">22</span>        const weatherResponse = await fetch(weatherUrl);</span>
-                <span class="code-line"><span class="line-number">23</span>        const weatherData = await weatherResponse.json();</span>
-                <span class="code-line"><span class="line-number">24</span>        </span>
-                <span class="code-line"><span class="line-number">25</span>        // Достаём температуру и скорость ветра</span>
-                <span class="code-line"><span class="line-number">26</span>        const temp = weatherData.current_weather.temperature;</span>
-                <span class="code-line"><span class="line-number">27</span>        const wind = weatherData.current_weather.windspeed;</span>
-                <span class="code-line"><span class="line-number">28</span>        </span>
-                <span class="code-line"><span class="line-number">29</span>        // Возвращаем отформатированную строку</span>
-                <span class="code-line"><span class="line-number">30</span>        return `🌡️ Температура: ${temp}°C, 💨 Ветер: ${wind} км/ч`;</span>
-                <span class="code-line"><span class="line-number">31</span>        </span>
-                <span class="code-line"><span class="line-number">32</span>    } catch (error) {</span>
-                <span class="code-line"><span class="line-number">33</span>        console.error('Ошибка погоды:', error);</span>
-                <span class="code-line"><span class="line-number">34</span>        return "Не удалось получить данные о погоде. Проверьте интернет.";</span>
-                <span class="code-line"><span class="line-number">35</span>    }</span>
-                <span class="code-line"><span class="line-number">36</span>}</span>
+                <span class="code-line"><span class="line-number">13</span>    }</span>
+                <span class="code-line"><span class="line-number">14</span>};</span>
             </div>
         </div>
         
         <div class="step-hint">
-            <strong>📖 Что делает эта функция:</strong>
-            <ul>
-                <li><strong>Строка 5:</strong> Отправляет запрос к геокодеру Open-Meteo, чтобы найти координаты города.</li>
-                <li><strong>Строка 10-12:</strong> Если город не найден — возвращаем понятную ошибку.</li>
-                <li><strong>Строка 21:</strong> Запрашиваем текущую погоду по координатам.</li>
-                <li><strong>Строка 26-27:</strong> Извлекаем температуру и скорость ветра.</li>
-                <li><strong>Строка 30:</strong> Возвращаем красивую строку с данными.</li>
-            </ul>
+            <strong>Шаг 3. Измените функцию askAI()</strong>
+            <p>Замените старую функцию askAI() на эту (добавлено всего 10 новых строк):</p>
         </div>
-        
-        <h2 id="step2">🔧 Шаг 2. Описываем инструмент для AI</h2>
-        <p>Теперь нужно объяснить AI, какая функция у него есть и когда её вызывать. Это делается через объект <code>tools</code>.</p>
         
         <div class="code-block">
             <div class="code-header">
-                📄 Добавить после функции getRealWeather()
-            </div>
-            <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>// ===== ОПИСАНИЕ ИНСТРУМЕНТА ДЛЯ AI =====</span>
-                <span class="code-line"><span class="line-number">2</span>const weatherTool = {</span>
-                <span class="code-line"><span class="line-number">3</span>    type: "function",</span>
-                <span class="code-line"><span class="line-number">4</span>    function: {</span>
-                <span class="code-line"><span class="line-number">5</span>        name: "get_weather",              // Название функции</span>
-                <span class="code-line"><span class="line-number">6</span>        description: "Получает текущую погоду в указанном городе",</span>
-                <span class="code-line"><span class="line-number">7</span>        parameters: {</span>
-                <span class="code-line"><span class="line-number">8</span>            type: "object",</span>
-                <span class="code-line"><span class="line-number">9</span>            properties: {</span>
-                <span class="code-line"><span class="line-number">10</span>                city: {</span>
-                <span class="code-line"><span class="line-number">11</span>                    type: "string",</span>
-                <span class="code-line"><span class="line-number">12</span>                    description: "Название города на русском или английском"</span>
-                <span class="code-line"><span class="line-number">13</span>                }</span>
-                <span class="code-line"><span class="line-number">14</span>            },</span>
-                <span class="code-line"><span class="line-number">15</span>            required: ["city"]             // Город — обязательный параметр</span>
-                <span class="code-line"><span class="line-number">16</span>        }</span>
-                <span class="code-line"><span class="line-number">17</span>    }</span>
-                <span class="code-line"><span class="line-number">18</span>};</span>
-            </div>
-        </div>
-        
-        <div class="step-hint">
-            <strong>📖 Что означает каждый параметр:</strong>
-            <ul>
-                <li><strong>type: "function"</strong> — говорит AI, что это функция.</li>
-                <li><strong>name: "get_weather"</strong> — имя функции, которое будет использовать AI.</li>
-                <li><strong>description</strong> — описание того, что делает функция. AI читает это описание, чтобы понять, когда её вызывать.</li>
-                <li><strong>parameters</strong> — описывает, какие данные нужны для вызова.</li>
-                <li><strong>city</strong> — параметр с типом "string" (текст).</li>
-                <li><strong>required: ["city"]</strong> — говорит, что город обязателен.</li>
-            </ul>
-        </div>
-        
-        <h2 id="step3">🔄 Шаг 3. Обрабатываем вызов функции</h2>
-        <p>Теперь нужно изменить главную функцию <code>askAI()</code>, чтобы она:</p>
-        <ol>
-            <li>Передавала AI описание инструмента</li>
-            <li>Проверяла, не вызвал ли AI функцию</li>
-            <li>Если вызвал — получала погоду и отправляла результат обратно</li>
-        </ol>
-        
-        <div class="code-block">
-            <div class="code-header">
-                📄 Изменённая функция askAI() — добавить вместо старой
+                📄 Новая функция askAI() (жирным выделено то, что добавили)
             </div>
             <div class="code-content">
                 <span class="code-line"><span class="line-number">1</span>async function askAI() {</span>
                 <span class="code-line"><span class="line-number">2</span>    let question = questionInput.value.trim();</span>
-                <span class="code-line"><span class="line-number">3</span>    if (question === '') {</span>
-                <span class="code-line"><span class="line-number">4</span>        answerDiv.innerHTML = '&lt;p class="error"&gt;❌ Введите вопрос!&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">5</span>        return;</span>
-                <span class="code-line"><span class="line-number">6</span>    }</span>
+                <span class="code-line"><span class="line-number">3</span>    if (question === '') { answerDiv.innerHTML = '&lt;p class="error"&gt;Введите вопрос!&lt;/p&gt;'; return; }</span>
+                <span class="code-line"><span class="line-number">4</span>    </span>
+                <span class="code-line"><span class="line-number">5</span>    let apiKey = apiKeyInput.value.trim();</span>
+                <span class="code-line"><span class="line-number">6</span>    if (apiKey === '') { answerDiv.innerHTML = '&lt;p class="error"&gt;Вставьте API-ключ!&lt;/p&gt;'; return; }</span>
                 <span class="code-line"><span class="line-number">7</span>    </span>
-                <span class="code-line"><span class="line-number">8</span>    let apiKey = apiKeyInput.value.trim();</span>
-                <span class="code-line"><span class="line-number">9</span>    if (apiKey === '') {</span>
-                <span class="code-line"><span class="line-number">10</span>        answerDiv.innerHTML = '&lt;p class="error"&gt;❌ Вставьте API-ключ!&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">11</span>        return;</span>
-                <span class="code-line"><span class="line-number">12</span>    }</span>
-                <span class="code-line"><span class="line-number">13</span>    </span>
-                <span class="code-line"><span class="line-number">14</span>    answerDiv.innerHTML = '&lt;p class="loading"&gt;🤔 AI анализирует вопрос...&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">15</span>    </span>
-                <span class="code-line"><span class="line-number">16</span>    try {</span>
-                <span class="code-line"><span class="line-number">17</span>        // ПЕРВЫЙ ЗАПРОС: отправляем вопрос и список инструментов</span>
-                <span class="code-line"><span class="line-number">18</span>        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {</span>
-                <span class="code-line"><span class="line-number">19</span>            method: 'POST',</span>
-                <span class="code-line"><span class="line-number">20</span>            headers: {</span>
-                <span class="code-line"><span class="line-number">21</span>                'Authorization': `Bearer ${apiKey}`,</span>
-                <span class="code-line"><span class="line-number">22</span>                'Content-Type': 'application/json'</span>
-                <span class="code-line"><span class="line-number">23</span>            },</span>
-                <span class="code-line"><span class="line-number">24</span>            body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">25</span>                model: 'llama-3.3-70b-versatile',</span>
-                <span class="code-line"><span class="line-number">26</span>                messages: [</span>
-                <span class="code-line"><span class="line-number">27</span>                    { role: 'system', content: systemPrompt },</span>
-                <span class="code-line"><span class="line-number">28</span>                    { role: 'user', content: question }</span>
-                <span class="code-line"><span class="line-number">29</span>                ],</span>
-                <span class="code-line"><span class="line-number">30</span>                tools: [weatherTool],        // ← Передаём описание инструмента</span>
-                <span class="code-line"><span class="line-number">31</span>                tool_choice: 'auto',         // ← AI сам решает, вызывать или нет</span>
-                <span class="code-line"><span class="line-number">32</span>                temperature: 0.7</span>
-                <span class="code-line"><span class="line-number">33</span>            })</span>
-                <span class="code-line"><span class="line-number">34</span>        });</span>
-                <span class="code-line"><span class="line-number">35</span>        </span>
-                <span class="code-line"><span class="line-number">36</span>        const data = await response.json();</span>
-                <span class="code-line"><span class="line-number">37</span>        const message = data.choices[0].message;</span>
+                <span class="code-line"><span class="line-number">8</span>    answerDiv.innerHTML = '&lt;p class="loading"&gt;🤔 Думаю...&lt;/p&gt;';</span>
+                <span class="code-line"><span class="line-number">9</span>    </span>
+                <span class="code-line"><span class="line-number">10</span>    try {</span>
+                <span class="code-line"><span class="line-number">11</span>        // 👇👇👇 НОВОЕ: передаём инструмент в запросе</span>
+                <span class="code-line"><span class="line-number">12</span>        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {</span>
+                <span class="code-line"><span class="line-number">13</span>            method: 'POST',</span>
+                <span class="code-line"><span class="line-number">14</span>            headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },</span>
+                <span class="code-line"><span class="line-number">15</span>            body: JSON.stringify({</span>
+                <span class="code-line"><span class="line-number">16</span>                model: 'llama-3.3-70b-versatile',</span>
+                <span class="code-line"><span class="line-number">17</span>                messages: [</span>
+                <span class="code-line"><span class="line-number">18</span>                    { role: 'system', content: systemPrompt },</span>
+                <span class="code-line"><span class="line-number">19</span>                    { role: 'user', content: question }</span>
+                <span class="code-line"><span class="line-number">20</span>                ],</span>
+                <span class="code-line"><span class="line-number">21</span>                <strong>tools: [weatherTool],      // ← НОВОЕ: передаём инструмент</strong></span>
+                <span class="code-line"><span class="line-number">22</span>                <strong>tool_choice: 'auto',       // ← НОВОЕ: AI сам решает</strong></span>
+                <span class="code-line"><span class="line-number">23</span>                temperature: 0.7</span>
+                <span class="code-line"><span class="line-number">24</span>            })</span>
+                <span class="code-line"><span class="line-number">25</span>        });</span>
+                <span class="code-line"><span class="line-number">26</span>        </span>
+                <span class="code-line"><span class="line-number">27</span>        const data = await response.json();</span>
+                <span class="code-line"><span class="line-number">28</span>        const message = data.choices[0].message;</span>
+                <span class="code-line"><span class="line-number">29</span>        </span>
+                <span class="code-line"><span class="line-number">30</span>        // 👇👇👇 НОВОЕ: проверяем, вызвал ли AI функцию</span>
+                <span class="code-line"><span class="line-number">31</span>        <strong>if (message.tool_calls) {</strong></span>
+                <span class="code-line"><span class="line-number">32</span>            <strong>const city = JSON.parse(message.tool_calls[0].function.arguments).city;</strong></span>
+                <span class="code-line"><span class="line-number">33</span>            <strong>answerDiv.innerHTML = `&lt;p class="loading"&gt;🌐 Получаю погоду для ${city}...&lt;/p&gt;`;</strong></span>
+                <span class="code-line"><span class="line-number">34</span>            <strong>const weather = await getWeather(city);</strong></span>
+                <span class="code-line"><span class="line-number">35</span>            <strong>answerDiv.innerHTML = `&lt;div class="weather-info"&gt;🌦️ Реальная погода: ${weather}&lt;/div&gt;`;</strong></span>
+                <span class="code-line"><span class="line-number">36</span>            <strong>return;</strong></span>
+                <span class="code-line"><span class="line-number">37</span>        <strong>}</strong></span>
                 <span class="code-line"><span class="line-number">38</span>        </span>
-                <span class="code-line"><span class="line-number">39</span>        // ПРОВЕРЯЕМ: вызвал ли AI наш инструмент?</span>
-                <span class="code-line"><span class="line-number">40</span>        if (message.tool_calls && message.tool_calls.length > 0) {</span>
-                <span class="code-line"><span class="line-number">41</span>            const toolCall = message.tool_calls[0];</span>
-                <span class="code-line"><span class="line-number">42</span>            const functionName = toolCall.function.name;</span>
-                <span class="code-line"><span class="line-number">43</span>            const args = JSON.parse(toolCall.function.arguments);</span>
-                <span class="code-line"><span class="line-number">44</span>            const city = args.city;</span>
-                <span class="code-line"><span class="line-number">45</span>            </span>
-                <span class="code-line"><span class="line-number">46</span>            if (functionName === 'get_weather') {</span>
-                <span class="code-line"><span class="line-number">47</span>                // Показываем, что идёт поиск погоды</span>
-                <span class="code-line"><span class="line-number">48</span>                answerDiv.innerHTML = `&lt;p class="loading"&gt;🌐 Получаю реальную погоду для "${city}" с open-meteo.com...&lt;/p&gt;`;</span>
-                <span class="code-line"><span class="line-number">49</span>                </span>
-                <span class="code-line"><span class="line-number">50</span>                // Вызываем нашу функцию</span>
-                <span class="code-line"><span class="line-number">51</span>                const weatherResult = await getRealWeather(city);</span>
-                <span class="code-line"><span class="line-number">52</span>                </span>
-                <span class="code-line"><span class="line-number">53</span>                // ВТОРОЙ ЗАПРОС: отправляем результат обратно AI</span>
-                <span class="code-line"><span class="line-number">54</span>                const finalResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {</span>
-                <span class="code-line"><span class="line-number">55</span>                    method: 'POST',</span>
-                <span class="code-line"><span class="line-number">56</span>                    headers: {</span>
-                <span class="code-line"><span class="line-number">57</span>                        'Authorization': `Bearer ${apiKey}`,</span>
-                <span class="code-line"><span class="line-number">58</span>                        'Content-Type': 'application/json'</span>
-                <span class="code-line"><span class="line-number">59</span>                    },</span>
-                <span class="code-line"><span class="line-number">60</span>                    body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">61</span>                        model: 'llama-3.3-70b-versatile',</span>
-                <span class="code-line"><span class="line-number">62</span>                        messages: [</span>
-                <span class="code-line"><span class="line-number">63</span>                            { role: 'system', content: systemPrompt },</span>
-                <span class="code-line"><span class="line-number">64</span>                            { role: 'user', content: question },</span>
-                <span class="code-line"><span class="line-number">65</span>                            message,  // ← Ответ AI с вызовом функции</span>
-                <span class="code-line"><span class="line-number">66</span>                            {</span>
-                <span class="code-line"><span class="line-number">67</span>                                role: 'tool',</span>
-                <span class="code-line"><span class="line-number">68</span>                                tool_call_id: toolCall.id,</span>
-                <span class="code-line"><span class="line-number">69</span>                                content: weatherResult   // ← Реальные данные</span>
-                <span class="code-line"><span class="line-number">70</span>                            }</span>
-                <span class="code-line"><span class="line-number">71</span>                        ],</span>
-                <span class="code-line"><span class="line-number">72</span>                        temperature: 0.7</span>
-                <span class="code-line"><span class="line-number">73</span>                    })</span>
-                <span class="code-line"><span class="line-number">74</span>                });</span>
-                <span class="code-line"><span class="line-number">75</span>                </span>
-                <span class="code-line"><span class="line-number">76</span>                const finalData = await finalResponse.json();</span>
-                <span class="code-line"><span class="line-number">77</span>                const finalAnswer = finalData.choices[0].message.content;</span>
-                <span class="code-line"><span class="line-number">78</span>                </span>
-                <span class="code-line"><span class="line-number">79</span>                // Показываем ответ с реальными данными</span>
-                <span class="code-line"><span class="line-number">80</span>                answerDiv.innerHTML = `</span>
-                <span class="code-line"><span class="line-number">81</span>                    &lt;div class="weather-info"&gt;🌦️ РЕАЛЬНЫЕ ДАННЫЕ (open-meteo.com):&lt;br&gt;${weatherResult}&lt;/div&gt;</span>
-                <span class="code-line"><span class="line-number">82</span>                    &lt;div class="answer-text"&gt;&lt;strong&gt;🤖 AI отвечает:&lt;/strong&gt;&lt;br&gt;${finalAnswer}&lt;/div&gt;</span>
-                <span class="code-line"><span class="line-number">83</span>                `;</span>
-                <span class="code-line"><span class="line-number">84</span>                return;</span>
-                <span class="code-line"><span class="line-number">85</span>            }</span>
-                <span class="code-line"><span class="line-number">86</span>        }</span>
-                <span class="code-line"><span class="line-number">87</span>        </span>
-                <span class="code-line"><span class="line-number">88</span>        // Если AI не вызвал инструмент — просто показываем обычный ответ</span>
-                <span class="code-line"><span class="line-number">89</span>        answerDiv.innerHTML = `&lt;div class="answer-text"&gt;&lt;strong&gt;🤖 AI отвечает:&lt;/strong&gt;&lt;br&gt;${message.content}&lt;/div&gt;`;</span>
-                <span class="code-line"><span class="line-number">90</span>        </span>
-                <span class="code-line"><span class="line-number">91</span>    } catch (error) {</span>
-                <span class="code-line"><span class="line-number">92</span>        console.error('Ошибка:', error);</span>
-                <span class="code-line"><span class="line-number">93</span>        answerDiv.innerHTML = `&lt;p class="error"&gt;❌ Ошибка: ${error.message}&lt;/p&gt;`;</span>
-                <span class="code-line"><span class="line-number">94</span>    }</span>
-                <span class="code-line"><span class="line-number">95</span>}</span>
+                <span class="code-line"><span class="line-number">39</span>        // Если не про погоду — отвечаем как обычно</span>
+                <span class="code-line"><span class="line-number">40</span>        answerDiv.innerHTML = `&lt;div&gt;&lt;strong&gt;🤖 AI:&lt;/strong&gt; ${message.content}&lt;/div&gt;`;</span>
+                <span class="code-line"><span class="line-number">41</span>        </span>
+                <span class="code-line"><span class="line-number">42</span>    } catch(error) {</span>
+                <span class="code-line"><span class="line-number">43</span>        answerDiv.innerHTML = `&lt;p class="error"&gt;❌ Ошибка: ${error.message}&lt;/p&gt;`;</span>
+                <span class="code-line"><span class="line-number">44</span>    }</span>
+                <span class="code-line"><span class="line-number">45</span>}</span>
             </div>
         </div>
         
-        <h2 id="step4">📝 Шаг 4. Полный код для вставки</h2>
-        <p>Вот <strong>весь код script.js</strong> целиком — скопируй его полностью:</p>
-        
-        <div class="code-block">
-            <div class="code-header">
-                📄 script.js — полный код
-            </div>
-            <div class="code-content">
-                <span class="code-line"><span class="line-number">1</span>document.addEventListener('DOMContentLoaded', function() {</span>
-                <span class="code-line"><span class="line-number">2</span>    const button = document.getElementById('askBtn');</span>
-                <span class="code-line"><span class="line-number">3</span>    const questionInput = document.getElementById('questionInput');</span>
-                <span class="code-line"><span class="line-number">4</span>    const answerDiv = document.getElementById('answerResult');</span>
-                <span class="code-line"><span class="line-number">5</span>    const apiKeyInput = document.getElementById('apiKeyInput');</span>
-                <span class="code-line"><span class="line-number">6</span>    </span>
-                <span class="code-line"><span class="line-number">7</span>    const defaultQuestion = "Что такое искусственный интеллект?";</span>
-                <span class="code-line"><span class="line-number">8</span>    </span>
-                <span class="code-line"><span class="line-number">9</span>    questionInput.addEventListener('focus', function() {</span>
-                <span class="code-line"><span class="line-number">10</span>        if (questionInput.value === defaultQuestion) {</span>
-                <span class="code-line"><span class="line-number">11</span>            questionInput.value = '';</span>
-                <span class="code-line"><span class="line-number">12</span>            questionInput.style.color = '#333';</span>
-                <span class="code-line"><span class="line-number">13</span>        }</span>
-                <span class="code-line"><span class="line-number">14</span>    });</span>
-                <span class="code-line"><span class="line-number">15</span>    </span>
-                <span class="code-line"><span class="line-number">16</span>    questionInput.addEventListener('blur', function() {</span>
-                <span class="code-line"><span class="line-number">17</span>        if (questionInput.value === '') {</span>
-                <span class="code-line"><span class="line-number">18</span>            questionInput.value = defaultQuestion;</span>
-                <span class="code-line"><span class="line-number">19</span>            questionInput.style.color = '#aaa';</span>
-                <span class="code-line"><span class="line-number">20</span>        }</span>
-                <span class="code-line"><span class="line-number">21</span>    });</span>
-                <span class="code-line"><span class="line-number">22</span>    </span>
-                <span class="code-line"><span class="line-number">23</span>    const systemPrompt = `Ты дружелюбный AI-помощник для детей. </span>
-                <span class="code-line"><span class="line-number">24</span>                          Отвечай кратко (2-3 предложения), понятно и с юмором. </span>
-                <span class="code-line"><span class="line-number">25</span>                          Используй простые слова. Если вопрос сложный, объясняй на примерах.`;</span>
-                <span class="code-line"><span class="line-number">26</span>    </span>
-                <span class="code-line"><span class="line-number">27</span>    // ===== ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ РЕАЛЬНОЙ ПОГОДЫ =====</span>
-                <span class="code-line"><span class="line-number">28</span>    async function getRealWeather(city) {</span>
-                <span class="code-line"><span class="line-number">29</span>        try {</span>
-                <span class="code-line"><span class="line-number">30</span>            const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;</span>
-                <span class="code-line"><span class="line-number">31</span>            const geoResponse = await fetch(geoUrl);</span>
-                <span class="code-line"><span class="line-number">32</span>            const geoData = await geoResponse.json();</span>
-                <span class="code-line"><span class="line-number">33</span>            </span>
-                <span class="code-line"><span class="line-number">34</span>            if (!geoData.results || geoData.results.length === 0) {</span>
-                <span class="code-line"><span class="line-number">35</span>                return `Город "${city}" не найден. Попробуйте написать на английском.`;</span>
-                <span class="code-line"><span class="line-number">36</span>            }</span>
-                <span class="code-line"><span class="line-number">37</span>            </span>
-                <span class="code-line"><span class="line-number">38</span>            const location = geoData.results[0];</span>
-                <span class="code-line"><span class="line-number">39</span>            const lat = location.latitude;</span>
-                <span class="code-line"><span class="line-number">40</span>            const lon = location.longitude;</span>
-                <span class="code-line"><span class="line-number">41</span>            const cityName = location.name;</span>
-                <span class="code-line"><span class="line-number">42</span>            </span>
-                <span class="code-line"><span class="line-number">43</span>            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;</span>
-                <span class="code-line"><span class="line-number">44</span>            const weatherResponse = await fetch(weatherUrl);</span>
-                <span class="code-line"><span class="line-number">45</span>            const weatherData = await weatherResponse.json();</span>
-                <span class="code-line"><span class="line-number">46</span>            </span>
-                <span class="code-line"><span class="line-number">47</span>            const temp = weatherData.current_weather.temperature;</span>
-                <span class="code-line"><span class="line-number">48</span>            const wind = weatherData.current_weather.windspeed;</span>
-                <span class="code-line"><span class="line-number">49</span>            </span>
-                <span class="code-line"><span class="line-number">50</span>            return `🌡️ Температура: ${temp}°C, 💨 Ветер: ${wind} км/ч`;</span>
-                <span class="code-line"><span class="line-number">51</span>        } catch (error) {</span>
-                <span class="code-line"><span class="line-number">52</span>            return "Не удалось получить данные о погоде.";</span>
-                <span class="code-line"><span class="line-number">53</span>        }</span>
-                <span class="code-line"><span class="line-number">54</span>    }</span>
-                <span class="code-line"><span class="line-number">55</span>    </span>
-                <span class="code-line"><span class="line-number">56</span>    // ===== ОПИСАНИЕ ИНСТРУМЕНТА ДЛЯ AI =====</span>
-                <span class="code-line"><span class="line-number">57</span>    const weatherTool = {</span>
-                <span class="code-line"><span class="line-number">58</span>        type: "function",</span>
-                <span class="code-line"><span class="line-number">59</span>        function: {</span>
-                <span class="code-line"><span class="line-number">60</span>            name: "get_weather",</span>
-                <span class="code-line"><span class="line-number">61</span>            description: "Получает текущую погоду в указанном городе",</span>
-                <span class="code-line"><span class="line-number">62</span>            parameters: {</span>
-                <span class="code-line"><span class="line-number">63</span>                type: "object",</span>
-                <span class="code-line"><span class="line-number">64</span>                properties: {</span>
-                <span class="code-line"><span class="line-number">65</span>                    city: {</span>
-                <span class="code-line"><span class="line-number">66</span>                        type: "string",</span>
-                <span class="code-line"><span class="line-number">67</span>                        description: "Название города на русском или английском"</span>
-                <span class="code-line"><span class="line-number">68</span>                    }</span>
-                <span class="code-line"><span class="line-number">69</span>                },</span>
-                <span class="code-line"><span class="line-number">70</span>                required: ["city"]</span>
-                <span class="code-line"><span class="line-number">71</span>            }</span>
-                <span class="code-line"><span class="line-number">72</span>        }</span>
-                <span class="code-line"><span class="line-number">73</span>    };</span>
-                <span class="code-line"><span class="line-number">74</span>    </span>
-                <span class="code-line"><span class="line-number">75</span>    async function askAI() {</span>
-                <span class="code-line"><span class="line-number">76</span>        let question = questionInput.value.trim();</span>
-                <span class="code-line"><span class="line-number">77</span>        if (question === defaultQuestion || question === '') {</span>
-                <span class="code-line"><span class="line-number">78</span>            answerDiv.innerHTML = '&lt;p class="hint"&gt;Пожалуйста, введи свой вопрос!&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">79</span>            return;</span>
-                <span class="code-line"><span class="line-number">80</span>        }</span>
-                <span class="code-line"><span class="line-number">81</span>        </span>
-                <span class="code-line"><span class="line-number">82</span>        let apiKey = apiKeyInput.value.trim();</span>
-                <span class="code-line"><span class="line-number">83</span>        if (apiKey === '') {</span>
-                <span class="code-line"><span class="line-number">84</span>            answerDiv.innerHTML = '&lt;p class="error"&gt;❌ Вставьте API-ключ Groq!&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">85</span>            return;</span>
-                <span class="code-line"><span class="line-number">86</span>        }</span>
-                <span class="code-line"><span class="line-number">87</span>        </span>
-                <span class="code-line"><span class="line-number">88</span>        answerDiv.innerHTML = '&lt;p class="loading"&gt;🤔 AI анализирует вопрос...&lt;/p&gt;';</span>
-                <span class="code-line"><span class="line-number">89</span>        </span>
-                <span class="code-line"><span class="line-number">90</span>        try {</span>
-                <span class="code-line"><span class="line-number">91</span>            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {</span>
-                <span class="code-line"><span class="line-number">92</span>                method: 'POST',</span>
-                <span class="code-line"><span class="line-number">93</span>                headers: {</span>
-                <span class="code-line"><span class="line-number">94</span>                    'Authorization': `Bearer ${apiKey}`,</span>
-                <span class="code-line"><span class="line-number">95</span>                    'Content-Type': 'application/json'</span>
-                <span class="code-line"><span class="line-number">96</span>                },</span>
-                <span class="code-line"><span class="line-number">97</span>                body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">98</span>                    model: 'llama-3.3-70b-versatile',</span>
-                <span class="code-line"><span class="line-number">99</span>                    messages: [</span>
-                <span class="code-line"><span class="line-number">100</span>                        { role: 'system', content: systemPrompt },</span>
-                <span class="code-line"><span class="line-number">101</span>                        { role: 'user', content: question }</span>
-                <span class="code-line"><span class="line-number">102</span>                    ],</span>
-                <span class="code-line"><span class="line-number">103</span>                    tools: [weatherTool],</span>
-                <span class="code-line"><span class="line-number">104</span>                    tool_choice: 'auto',</span>
-                <span class="code-line"><span class="line-number">105</span>                    temperature: 0.7</span>
-                <span class="code-line"><span class="line-number">106</span>                })</span>
-                <span class="code-line"><span class="line-number">107</span>            });</span>
-                <span class="code-line"><span class="line-number">108</span>            </span>
-                <span class="code-line"><span class="line-number">109</span>            const data = await response.json();</span>
-                <span class="code-line"><span class="line-number">110</span>            const message = data.choices[0].message;</span>
-                <span class="code-line"><span class="line-number">111</span>            </span>
-                <span class="code-line"><span class="line-number">112</span>            if (message.tool_calls && message.tool_calls.length > 0) {</span>
-                <span class="code-line"><span class="line-number">113</span>                const toolCall = message.tool_calls[0];</span>
-                <span class="code-line"><span class="line-number">114</span>                const args = JSON.parse(toolCall.function.arguments);</span>
-                <span class="code-line"><span class="line-number">115</span>                const city = args.city;</span>
-                <span class="code-line"><span class="line-number">116</span>                </span>
-                <span class="code-line"><span class="line-number">117</span>                answerDiv.innerHTML = `&lt;p class="loading"&gt;🌐 Получаю реальную погоду для "${city}"...&lt;/p&gt;`;</span>
-                <span class="code-line"><span class="line-number">118</span>                </span>
-                <span class="code-line"><span class="line-number">119</span>                const weatherResult = await getRealWeather(city);</span>
-                <span class="code-line"><span class="line-number">120</span>                </span>
-                <span class="code-line"><span class="line-number">121</span>                const finalResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {</span>
-                <span class="code-line"><span class="line-number">122</span>                    method: 'POST',</span>
-                <span class="code-line"><span class="line-number">123</span>                    headers: {</span>
-                <span class="code-line"><span class="line-number">124</span>                        'Authorization': `Bearer ${apiKey}`,</span>
-                <span class="code-line"><span class="line-number">125</span>                        'Content-Type': 'application/json'</span>
-                <span class="code-line"><span class="line-number">126</span>                    },</span>
-                <span class="code-line"><span class="line-number">127</span>                    body: JSON.stringify({</span>
-                <span class="code-line"><span class="line-number">128</span>                        model: 'llama-3.3-70b-versatile',</span>
-                <span class="code-line"><span class="line-number">129</span>                        messages: [</span>
-                <span class="code-line"><span class="line-number">130</span>                            { role: 'system', content: systemPrompt },</span>
-                <span class="code-line"><span class="line-number">131</span>                            { role: 'user', content: question },</span>
-                <span class="code-line"><span class="line-number">132</span>                            message,</span>
-                <span class="code-line"><span class="line-number">133</span>                            {</span>
-                <span class="code-line"><span class="line-number">134</span>                                role: 'tool',</span>
-                <span class="code-line"><span class="line-number">135</span>                                tool_call_id: toolCall.id,</span>
-                <span class="code-line"><span class="line-number">136</span>                                content: weatherResult</span>
-                <span class="code-line"><span class="line-number">137</span>                            }</span>
-                <span class="code-line"><span class="line-number">138</span>                        ],</span>
-                <span class="code-line"><span class="line-number">139</span>                        temperature: 0.7</span>
-                <span class="code-line"><span class="line-number">140</span>                    })</span>
-                <span class="code-line"><span class="line-number">141</span>                });</span>
-                <span class="code-line"><span class="line-number">142</span>                </span>
-                <span class="code-line"><span class="line-number">143</span>                const finalData = await finalResponse.json();</span>
-                <span class="code-line"><span class="line-number">144</span>                const finalAnswer = finalData.choices[0].message.content;</span>
-                <span class="code-line"><span class="line-number">145</span>                </span>
-                <span class="code-line"><span class="line-number">146</span>                answerDiv.innerHTML = `</span>
-                <span class="code-line"><span class="line-number">147</span>                    &lt;div class="weather-info"&gt;🌦️ РЕАЛЬНЫЕ ДАННЫЕ: ${weatherResult}&lt;/div&gt;</span>
-                <span class="code-line"><span class="line-number">148</span>                    &lt;div class="answer-text"&gt;&lt;strong&gt;🤖 AI отвечает:&lt;/strong&gt;&lt;br&gt;${finalAnswer}&lt;/div&gt;</span>
-                <span class="code-line"><span class="line-number">149</span>                `;</span>
-                <span class="code-line"><span class="line-number">150</span>                return;</span>
-                <span class="code-line"><span class="line-number">151</span>            }</span>
-                <span class="code-line"><span class="line-number">152</span>            </span>
-                <span class="code-line"><span class="line-number">153</span>            answerDiv.innerHTML = `&lt;div class="answer-text"&gt;&lt;strong&gt;🤖 AI отвечает:&lt;/strong&gt;&lt;br&gt;${message.content}&lt;/div&gt;`;</span>
-                <span class="code-line"><span class="line-number">154</span>            </span>
-                <span class="code-line"><span class="line-number">155</span>        } catch (error) {</span>
-                <span class="code-line"><span class="line-number">156</span>            console.error('Ошибка:', error);</span>
-                <span class="code-line"><span class="line-number">157</span>            answerDiv.innerHTML = `&lt;p class="error"&gt;❌ Ошибка: ${error.message}&lt;/p&gt;`;</span>
-                <span class="code-line"><span class="line-number">158</span>        }</span>
-                <span class="code-line"><span class="line-number">159</span>    }</span>
-                <span class="code-line"><span class="line-number">160</span>    </span>
-                <span class="code-line"><span class="line-number">161</span>    button.addEventListener('click', askAI);</span>
-                <span class="code-line"><span class="line-number">162</span>    questionInput.addEventListener('keypress', function(e) {</span>
-                <span class="code-line"><span class="line-number">163</span>        if (e.key === 'Enter') askAI();</span>
-                <span class="code-line"><span class="line-number">164</span>    });</span>
-                <span class="code-line"><span class="line-number">165</span>    </span>
-                <span class="code-line"><span class="line-number">166</span>    if (localStorage.getItem('groq_api_key')) {</span>
-                <span class="code-line"><span class="line-number">167</span>        apiKeyInput.value = localStorage.getItem('groq_api_key');</span>
-                <span class="code-line"><span class="line-number">168</span>    }</span>
-                <span class="code-line"><span class="line-number">169</span>    apiKeyInput.addEventListener('change', function() {</span>
-                <span class="code-line"><span class="line-number">170</span>        localStorage.setItem('groq_api_key', apiKeyInput.value);</span>
-                <span class="code-line"><span class="line-number">171</span>    });</span>
-                <span class="code-line"><span class="line-number">172</span>});</span>
-            </div>
+        <div class="info-box">
+            <strong>✅ Готово!</strong> Теперь ваш AI умеет отвечать на вопросы о погоде с реальными данными.
         </div>
         
-        <h2 id="explain">📖 Пояснение каждой новой строки</h2>
-        <div class="explain-block">
-            <div class="param-item">
-                <span class="param-name">📌 Строки 27-54: функция getRealWeather(city)</span>
-                <div class="param-desc">Сама ходит в интернет за погодой. Использует Open-Meteo API (бесплатно, без ключа). Сначала находит координаты города, потом погоду по координатам.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строки 56-73: объект weatherTool</span>
-                <div class="param-desc">Описывает инструмент для AI: название функции, её описание, какие параметры нужны. AI читает это описание и понимает, когда вызывать функцию.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строка 103: tools: [weatherTool]</span>
-                <div class="param-desc">Передаём AI список доступных инструментов. В квадратных скобках можно перечислить несколько.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строка 104: tool_choice: 'auto'</span>
-                <div class="param-desc">Позволяет AI самому решать, вызывать функцию или ответить обычным текстом.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строка 112: if (message.tool_calls && ...)</span>
-                <div class="param-desc">Проверяем, вызвал ли AI наш инструмент. Если да — внутри лежат параметры вызова.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строка 114: JSON.parse(toolCall.function.arguments)</span>
-                <div class="param-desc">Превращает строку с параметрами в объект JavaScript. Например, '{"city":"Minsk"}' превращается в {city: "Minsk"}.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строка 119: await getRealWeather(city)</span>
-                <div class="param-desc">Вызываем нашу функцию, которая идёт в интернет за реальной погодой.</div>
-            </div>
-            
-            <div class="param-item">
-                <span class="param-name">📌 Строки 133-137: role: 'tool'</span>
-                <div class="param-desc">Отправляем результат функции обратно AI. role: 'tool' означает "это результат работы инструмента".</div>
-            </div>
-        </div>
-        
-        <h2 id="live">🎯 Попробовать прямо сейчас</h2>
+        <h2>🧪 Проверьте, как работает</h2>
         <div class="live-demo-section">
-            <h3>🌤️ AI-помощник с реальной погодой</h3>
-            <p>Задай вопрос о погоде — AI сам поймёт, что нужно, и получит реальные данные!</p>
-            
-            <div class="example-buttons">
-                <button class="example-btn" data-question="Какая погода в Минске?">🌤️ Погода в Минске</button>
-                <button class="example-btn" data-question="Сколько градусов в Париже?">🌍 Погода в Париже</button>
-                <button class="example-btn" data-question="Что такое искусственный интеллект?">🤖 Обычный вопрос</button>
-            </div>
-            
             <div class="chat-box">
                 <div class="question-area">
-                    <input type="text" id="liveQuestion" placeholder="Например: Какая погода в Минске?" value="Какая погода в Минске?">
+                    <input type="text" id="liveQuestion" placeholder="Какая погода в Минске?" value="Какая погода в Минске?">
                     <button id="liveBtn">🌤️ Спросить</button>
                 </div>
                 
                 <div class="answer-area" id="liveAnswer">
-                    <p class="hint">✏️ Напишите вопрос о погоде или что-то другое...</p>
+                    <p class="hint">Введите вопрос о погоде...</p>
                 </div>
                 
                 <div class="api-field">
-                    <label style="font-weight: bold;">🔑 API-ключ Groq:</label>
-                    <input type="password" id="liveApiKey" placeholder="Вставьте ключ сюда (gsk_...)">
-                    <p style="font-size: 12px; margin-top: 8px;">🔹 Ключ можно получить на <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
+                    <label>🔑 API-ключ Groq:</label>
+                    <input type="password" id="liveApiKey" placeholder="gsk_...">
+                    <small>Получить: <a href="https://console.groq.com" target="_blank">console.groq.com</a></small>
                 </div>
             </div>
         </div>
         
-        <h2 id="cheatsheet">📚 Шпаргалка</h2>
-        <div class="cheatsheet">
-            <table>
-                <tr><th>Элемент</th><th>Что делает</th></tr>
-                <tr><td><code>tools: [...]</code></td>
-                    <td>Передаёт AI список доступных функций</td>
-                </tr>
-                <tr><td><code>tool_choice: 'auto'</code></td>
-                    <td>AI сам решает, вызывать функцию или нет</td>
-                </tr>
-                <tr><td><code>message.tool_calls</code></td>
-                    <td>Содержит вызов функции от AI (если есть)</td>
-                </tr>
-                <tr><td><code>role: 'tool'</code></td>
-                    <td>Отмечает, что сообщение — результат работы инструмента</td>
-                </tr>
-                <tr><td><code>tool_call_id</code></td>
-                    <td>ID вызова функции, чтобы AI понял, к какому запросу относится ответ</td>
-                </tr>
-            </table>
-        </div>
-        
         <div class="tip-box">
-            <strong>💡 Что можно улучшить:</strong>
+            <strong>💡 Что означают добавленные строки:</strong>
             <ul>
-                <li>Добавить больше информации о погоде (влажность, давление, восход солнца)</li>
-                <li>Сделать прогноз на несколько дней вперёд</li>
-                <li>Добавить другие функции: курсы валют, новости, калькулятор</li>
+                <li><strong>tools: [weatherTool]</strong> — говорим AI, что у него есть инструмент "погода"</li>
+                <li><strong>tool_choice: 'auto'</strong> — разрешаем AI самому решать, вызывать инструмент или нет</li>
+                <li><strong>if (message.tool_calls)</strong> — проверяем, вызвал ли AI функцию</li>
+                <li><strong>getWeather(city)</strong> — наша функция, которая ходит на open-meteo.com</li>
             </ul>
         </div>
         
         <hr>
         
-        <div style="text-align: center; padding: 20px;">
-            <h3>🎉 Поздравляю! Ты научил AI получать реальную погоду!</h3>
-            <p style="margin: 20px 0;">Теперь AI сам понимает, когда ему нужны данные из интернета, идёт за ними и возвращает актуальный ответ!</p>
+        <div style="text-align: center;">
             <button class="btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Наверх</button>
         </div>
         
     </div>
     
     <script>
-        // Живой пример
+        // Живой пример для проверки
         document.addEventListener('DOMContentLoaded', function() {
-            const liveBtn = document.getElementById('liveBtn');
-            const liveQuestion = document.getElementById('liveQuestion');
-            const liveAnswer = document.getElementById('liveAnswer');
-            const liveApiKey = document.getElementById('liveApiKey');
+            const btn = document.getElementById('liveBtn');
+            const questionInput = document.getElementById('liveQuestion');
+            const answerDiv = document.getElementById('liveAnswer');
+            const apiKeyInput = document.getElementById('liveApiKey');
             
-            document.querySelectorAll('.example-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    liveQuestion.value = btn.dataset.question;
-                    liveBtn.click();
-                });
-            });
-            
-            if (localStorage.getItem('groq_api_key_weather')) {
-                liveApiKey.value = localStorage.getItem('groq_api_key_weather');
+            if (localStorage.getItem('groq_key')) {
+                apiKeyInput.value = localStorage.getItem('groq_key');
             }
-            liveApiKey.addEventListener('change', function() {
-                localStorage.setItem('groq_api_key_weather', liveApiKey.value);
+            apiKeyInput.addEventListener('change', function() {
+                localStorage.setItem('groq_key', apiKeyInput.value);
             });
             
-            const systemPrompt = `Ты дружелюбный AI-помощник. Отвечай кратко, понятно, с юмором.`;
+            const systemPrompt = "Ты дружелюбный помощник. Отвечай кратко.";
             
-            async function getRealWeather(city) {
+            async function getWeather(city) {
                 try {
-                    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;
-                    const geoResponse = await fetch(geoUrl);
-                    const geoData = await geoResponse.json();
-                    
-                    if (!geoData.results || geoData.results.length === 0) {
-                        return `Город "${city}" не найден. Попробуйте написать на английском.`;
-                    }
-                    
-                    const location = geoData.results[0];
-                    const lat = location.latitude;
-                    const lon = location.longitude;
-                    
-                    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=auto`;
-                    const weatherResponse = await fetch(weatherUrl);
-                    const weatherData = await weatherResponse.json();
-                    
+                    const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1&language=ru&format=json`;
+                    const geoRes = await fetch(geoUrl);
+                    const geoData = await geoRes.json();
+                    if (!geoData.results) return `Город ${city} не найден`;
+                    const lat = geoData.results[0].latitude;
+                    const lon = geoData.results[0].longitude;
+                    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+                    const weatherRes = await fetch(weatherUrl);
+                    const weatherData = await weatherRes.json();
                     const temp = weatherData.current_weather.temperature;
                     const wind = weatherData.current_weather.windspeed;
-                    
-                    return `🌡️ Температура: ${temp}°C, 💨 Ветер: ${wind} км/ч`;
-                } catch (error) {
-                    return "Не удалось получить данные о погоде.";
+                    return `🌡️ ${temp}°C, ветер ${wind} км/ч`;
+                } catch(e) {
+                    return "Ошибка получения погоды";
                 }
             }
             
@@ -978,7 +421,7 @@
                 type: "function",
                 function: {
                     name: "get_weather",
-                    description: "Получает текущую погоду в указанном городе",
+                    description: "Получает погоду в городе",
                     parameters: {
                         type: "object",
                         properties: {
@@ -990,19 +433,19 @@
             };
             
             async function askAI() {
-                let question = liveQuestion.value.trim();
+                let question = questionInput.value.trim();
                 if (question === '') {
-                    liveAnswer.innerHTML = '<p class="error">❌ Введите вопрос!</p>';
+                    answerDiv.innerHTML = '<p class="error">Введите вопрос!</p>';
                     return;
                 }
                 
-                let apiKey = liveApiKey.value.trim();
+                let apiKey = apiKeyInput.value.trim();
                 if (apiKey === '') {
-                    liveAnswer.innerHTML = '<p class="error">❌ Вставьте API-ключ!</p>';
+                    answerDiv.innerHTML = '<p class="error">Вставьте API-ключ!</p>';
                     return;
                 }
                 
-                liveAnswer.innerHTML = '<div class="loading">🤔 AI анализирует вопрос...</div>';
+                answerDiv.innerHTML = '<p class="loading">🤔 Думаю...</p>';
                 
                 try {
                     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -1026,56 +469,23 @@
                     const data = await response.json();
                     const message = data.choices[0].message;
                     
-                    if (message.tool_calls && message.tool_calls.length > 0) {
-                        const toolCall = message.tool_calls[0];
-                        const args = JSON.parse(toolCall.function.arguments);
-                        const city = args.city;
-                        
-                        liveAnswer.innerHTML = `<div class="loading">🌐 Получаю реальную погоду для "${city}"...</div>`;
-                        
-                        const weatherResult = await getRealWeather(city);
-                        
-                        const finalResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${apiKey}`,
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                model: 'llama-3.3-70b-versatile',
-                                messages: [
-                                    { role: 'system', content: systemPrompt },
-                                    { role: 'user', content: question },
-                                    message,
-                                    {
-                                        role: 'tool',
-                                        tool_call_id: toolCall.id,
-                                        content: weatherResult
-                                    }
-                                ],
-                                temperature: 0.7
-                            })
-                        });
-                        
-                        const finalData = await finalResponse.json();
-                        const finalAnswer = finalData.choices[0].message.content;
-                        
-                        liveAnswer.innerHTML = `
-                            <div class="weather-info">🌦️ РЕАЛЬНЫЕ ДАННЫЕ: ${weatherResult}</div>
-                            <div class="answer-text"><strong>🤖 AI отвечает:</strong><br>${finalAnswer}</div>
-                        `;
+                    if (message.tool_calls) {
+                        const city = JSON.parse(message.tool_calls[0].function.arguments).city;
+                        answerDiv.innerHTML = `<p class="loading">🌐 Получаю погоду для ${city}...</p>`;
+                        const weather = await getWeather(city);
+                        answerDiv.innerHTML = `<div class="weather-info">🌦️ Реальная погода: ${weather}</div>`;
                         return;
                     }
                     
-                    liveAnswer.innerHTML = `<div class="answer-text"><strong>🤖 AI отвечает:</strong><br>${message.content}</div>`;
+                    answerDiv.innerHTML = `<div><strong>🤖 AI:</strong> ${message.content}</div>`;
                     
-                } catch (error) {
-                    liveAnswer.innerHTML = `<p class="error">❌ Ошибка: ${error.message}</p>`;
+                } catch(error) {
+                    answerDiv.innerHTML = `<p class="error">❌ Ошибка: ${error.message}</p>`;
                 }
             }
             
-            liveBtn.addEventListener('click', askAI);
-            liveQuestion.addEventListener('keypress', function(e) {
+            btn.addEventListener('click', askAI);
+            questionInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') askAI();
             });
         });
