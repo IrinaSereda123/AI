@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Работа №3 — Мульти-инструмент AI</title>
+    <style>
+        body {
+            background: #eef2f7;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 30px 20px;
+        }
+        .page {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .task-block {
+            background: #fff8e7;
+            border-left: 6px solid #ffc107;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+        }
+        .chat-box {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .question-area {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .question-area input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+        }
+        .question-area button {
+            background: #17a2b8;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .answer-area {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 120px;
+        }
+        .data-box {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .loading {
+            color: #17a2b8;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #ffe6e6;
+            padding: 12px;
+            border-radius: 12px;
+        }
+        .explain-block {
+            background: #e8f4f8;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .param-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin: 12px 0;
+        }
+        .param-name {
+            font-weight: bold;
+            color: #0066cc;
+            font-family: monospace;
+        }
+        .btn-back {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        .api-field {
+            margin-top: 20px;
+            padding: 12px;
+            background: #fff3cd;
+            border-radius: 12px;
+        }
+        .example-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .example-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .example-btn:hover {
+            background: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <div class="task-block">
+        <h2>🚀 Задание №3: Мульти-инструментный AI-ассистент</h2>
+        <p><strong>Цель:</strong> Научить AI работать с НЕСКОЛЬКИМИ инструментами одновременно.</p>
+        <p><strong>Что умеет:</strong> 🌤️ Погода в любом городе + 💰 Курс валют (USD, EUR к RUB).</p>
+        <p><strong>Почему это круто:</strong> AI сам понимает, какой инструмент вызвать — для погоды или для курса валют. Можно расширять до бесконечности!</p>
+    </div>
+
+    <div class="chat-box">
+        <h2>🌍 AI-ассистент 2.0</h2>
+        
+        <div class="example-buttons">
+            <button class="example-btn" data-question="Какая погода в Москве?">🌤️ Погода в Москве</button>
+            <button class="example-btn" data-question="Сколько стоит доллар в рублях?">💰 Курс USD/RUB</button>
+            <button class="example-btn" data-question="Погода в Париже и курс евро">🌍 Погода + курс евро</button>
+            <button class="example-btn" data-question="Что такое нейросеть?">🤖 Обычный вопрос</button>
+        </div>
+        
+        <div class="question-area">
+            <input type="text" id="userQuestion" placeholder="Например: Какая погода в Лондоне и курс доллара?" value="Какая погода в Минске и сколько стоит доллар?">
+            <button id="sendBtn">🚀 Отправить</button>
+        </div>
+        
+        <div class="answer-area" id="answerBlock">
+            <p style="color: #999;">✏️ Задайте вопрос...</p>
+        </div>
+        
+        <div class="api-field">
+            <label style="font-weight: bold;">🔑 API-ключ Groq:</label>
+            <input type="password" id="apiKeyInput" placeholder="gsk_...">
+        </div>
+    </div>
+
+    <div class="explain-block">
+        <h3>📖 Что нового в 3-й работе?</h3>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 Несколько инструментов в tools: [weatherTool, exchangeTool]</span>
+            <div class="param-desc">Мы передаём AI список из нескольких функций. AI сам выбирает, какую вызвать, исходя из вопроса.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 Обработка нескольких tool_calls</span>
+            <div class="param-desc">AI может вызвать несколько инструментов за раз (например, и погоду, и курс валют). Код обрабатывает их по очереди.</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 Бесплатный API курсов валют (exchangerate-api.com)</span>
+            <div class="param-desc">Не требует ключа. До 1500 запросов в месяц бесплатно. Формат: https://api.exchangerate-api.com/v4/latest/USD</div>
+        </div>
+        
+        <div class="param-item">
+            <span class="param-name">🔹 Описание параметров для каждого инструмента</span>
+            <div class="param-desc">Для погоды: city (город). Для курса: from_currency (USD/EUR) и to_currency (RUB). AI сам извлекает эти данные из вопроса.</div>
+        </div>
+    </div>
+    
+    <a href="index.html" class="btn-back">← Назад к списку работ</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const sendButton = document.getElementById('sendBtn');
+    const questionInput = document.getElementById('userQuestion');
+    const answerBlock = document.getElementById('answerBlock');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    
+    // Примеры-кнопки
+    document.querySelectorAll('.example-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            questionInput.value = btn.dataset.question;
+            sendButton.click();
+        });
+    });
+    
+    if (localStorage.getItem('groq_api_key')) {
+        apiKeyInput.value = localStorage.getItem('groq_api_key');
+    }
+    apiKeyInput.addEventListener('change', function() {
+        localStorage.setItem('groq_api_key', apiKeyInput.value);
+    });
+    
+    // ===== ФУНКЦИЯ ПОГОДЫ =====
+    async function getWeather(city) {
+        try {
+            const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=ru&format=json`;
+            const geoRes = await fetch(geoUrl);
+            const geoData = await geoRes.json();
+            if (!geoData.results) return `Город "${city}" не найден`;
+            const { latitude, longitude, name } = geoData.results[0];
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&timezone=auto`;
+            const weatherRes = await fetch(weatherUrl);
+            const weatherData = await weatherRes.json();
+            const temp = weatherData.current_weather.temperature;
+            const wind = weatherData.current_weather.windspeed;
+            return `🌡️ ${name}: ${temp}°C, ветер ${wind} км/ч`;
+        } catch (e) {
+            return "Ошибка получения погоды";
+        }
+    }
+    
+    // ===== ФУНКЦИЯ КУРСА ВАЛЮТ =====
+    async function getExchangeRate(fromCurrency, toCurrency) {
+        try {
+            const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency.toUpperCase()}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            const rate = data.rates[toCurrency.toUpperCase()];
+            if (!rate) return `Курс ${fromCurrency}/${toCurrency} не найден`;
+            return `💰 1 ${fromCurrency} = ${rate} ${toCurrency}`;
+        } catch (e) {
+            return "Ошибка получения курса";
+        }
+    }
+    
+    // ===== ОПИСАНИЕ ИНСТРУМЕНТОВ =====
+    const weatherTool = {
+        type: "function",
+        function: {
+            name: "get_weather",
+            description: "Получает текущую погоду в городе",
+            parameters: {
+                type: "object",
+                properties: {
+                    city: { type: "string", description: "Название города" }
+                },
+                required: ["city"]
+            }
+        }
+    };
+    
+    const exchangeTool = {
+        type: "function",
+        function: {
+            name: "get_exchange_rate",
+            description: "Получает курс валюты (например, USD к RUB)",
+            parameters: {
+                type: "object",
+                properties: {
+                    from_currency: { type: "string", description: "Из какой валюты, например USD или EUR" },
+                    to_currency: { type: "string", description: "В какую валюту, например RUB" }
+                },
+                required: ["from_currency", "to_currency"]
+            }
+        }
+    };
+    
+    // ===== ГЛАВНАЯ ФУНКЦИЯ =====
+    async function askAI() {
+        let question = questionInput.value.trim();
+        if (!question) { answerBlock.innerHTML = '<p class="error">❌ Введите вопрос</p>'; return; }
+        let apiKey = apiKeyInput.value.trim();
+        if (!apiKey) { answerBlock.innerHTML = '<p class="error">❌ Введите API-ключ</p>'; return; }
+        
+        answerBlock.innerHTML = '<div class="loading">🧠 AI анализирует и решает, какие инструменты вызвать...</div>';
+        
+        try {
+            // Первый запрос с двумя инструментами
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'llama-3.3-70b-versatile',
+                    messages: [
+                        { role: 'system', content: 'Ты помощник. Используй get_weather для погоды, get_exchange_rate для курса валют.' },
+                        { role: 'user', content: question }
+                    ],
+                    tools: [weatherTool, exchangeTool],
+                    tool_choice: 'auto',
+                    temperature: 0.7
+                })
+            });
+            
+            const data = await response.json();
+            const message = data.choices[0].message;
+            
+            // Если есть вызовы инструментов
+            if (message.tool_calls && message.tool_calls.length > 0) {
+                const toolResults = [];
+                let resultsHtml = '<div class="data-box">📡 РЕАЛЬНЫЕ ДАННЫЕ ИЗ ИНТЕРНЕТА:<br>';
+                
+                // Выполняем каждый вызванный инструмент
+                for (const toolCall of message.tool_calls) {
+                    const args = JSON.parse(toolCall.function.arguments);
+                    let result;
+                    
+                    if (toolCall.function.name === 'get_weather') {
+                        result = await getWeather(args.city);
+                        resultsHtml += `🌤️ ${result}<br>`;
+                    } else if (toolCall.function.name === 'get_exchange_rate') {
+                        result = await getExchangeRate(args.from_currency, args.to_currency);
+                        resultsHtml += `💱 ${result}<br>`;
+                    }
+                    
+                    toolResults.push({
+                        tool_call_id: toolCall.id,
+                        role: 'tool',
+                        content: result
+                    });
+                }
+                resultsHtml += '</div>';
+                
+                // Второй запрос с результатами
+                const finalResponse = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',
+                        messages: [
+                            { role: 'system', content: 'Ты помощник. Ответь пользователю, используя предоставленные данные.' },
+                            { role: 'user', content: question },
+                            message,
+                            ...toolResults
+                        ],
+                        temperature: 0.7
+                    })
+                });
+                
+                const finalData = await finalResponse.json();
+                const finalAnswer = finalData.choices[0].message.content;
+                
+                answerBlock.innerHTML = `${resultsHtml}<div class="answer-text"><strong>🤖 AI отвечает:</strong><br>${finalAnswer}</div>`;
+                return;
+            }
+            
+            // Если инструменты не вызывались
+            answerBlock.innerHTML = `<div class="answer-text"><strong>🤖 AI отвечает:</strong><br>${message.content}</div>`;
+            
+        } catch (error) {
+            answerBlock.innerHTML = `<div class="error">❌ Ошибка: ${error.message}</div>`;
+        }
+    }
+    
+    sendButton.addEventListener('click', askAI);
+    questionInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') askAI(); });
+});
+</script>
+</body>
+</html>
