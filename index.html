@@ -58,12 +58,15 @@
             font-size: 12px;
             margin-right: 10px;
         }
+        .star {
+            color: #f5a623;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>📚 Практические работы по ИИ</h1>
-        <p>Студент: ___________  |  Группа: ___________  |  Дата: ___________</p>
         
         <div class="work-card">
             <span class="badge">✅ Работа №1</span>
@@ -73,21 +76,21 @@
         </div>
         
         <div class="work-card">
-            <span class="badge">⭐ Работа №2</span>
-            <h2>🌤️ AI с реальной погодой (Function Calling)</h2>
+            <span class="badge">⭐ Работа №2 <span class="star">★</span></span>
+            <h2>🌤️ AI с реальной погодой (со звёздочкой)</h2>
             <p>Учим AI самостоятельно запрашивать погоду через Open-Meteo. Изучаем: инструменты (tools), вызов функций.</p>
             <a href="work2.html">🔗 Открыть работу №2</a>
         </div>
         
         <div class="work-card">
-            <span class="badge">🚀 Работа №3</span>
-            <h2>🌍 Мульти-инструментный AI-ассистент</h2>
-            <p>Погода + курсы валют + новости в одном боте. Изучаем: несколько инструментов, обработка разных запросов.</p>
-            <a href="work3.html">🔗 Открыть работу №3</a>
+            <span class="badge">📘 Теория</span>
+            <h2>📡 Асинхронные запросы: GET / POST</h2>
+            <p>Подготовка к практическим работам: fetch, async/await, Promise, работа с реальными API.</p>
+            <a href="theory.html">🔗 Открыть теорию</a>
         </div>
         
         <div style="margin-top: 30px; padding: 15px; background: #fff3cd; border-radius: 12px;">
-            <strong>📖 Важно:</strong> Для всех работ нужен API-ключ Groq.<br>
+            <strong>📖 Важно:</strong> Для работ №1 и №2 нужен API-ключ Groq.<br>
             Получить бесплатно: <a href="https://console.groq.com" target="_blank">https://console.groq.com</a> → регистрация → API Keys → Create API Key.
         </div>
     </div>
