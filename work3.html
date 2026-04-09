@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>📚 Лекция — Асинхронные запросы: GET и POST</title>
+    <title>📚 Асинхронные запросы: GET и POST</title>
     <style>
         * {
             margin: 0;
@@ -460,66 +460,8 @@
             </tbody>
         </table>
         
-        <!-- ===== ЧАСТЬ 10: ПРАКТИЧЕСКИЙ ПРИМЕР 1 — ШУТКА ===== -->
-        <h2>📖 Часть 10. Практический пример №1 — GET-запрос (шутка)</h2>
-        
-        <div class="demo-page">
-            <h3>😂 Пример GET-запроса — получить случайную шутку</h3>
-            <p>Используем бесплатный API: <strong>icanhazdadjoke.com</strong> (не требует ключа)</p>
-            <div class="demo-area">
-                <button class="demo-btn" id="getJokeBtn">😂 Получить шутку</button>
-                <div class="demo-result" id="getJokeResult">Нажмите кнопку</div>
-            </div>
-            <div class="code-block">
-                <div class="code-header">📄 Код страницы для получения шутки (полный HTML)</div>
-                <div class="code-content">
-                    <span class="code-line">&lt;!DOCTYPE html&gt;</span>
-                    <span class="code-line">&lt;html&gt;</span>
-                    <span class="code-line">&lt;head&gt;&lt;title&gt;Получить шутку&lt;/title&gt;&lt;/head&gt;</span>
-                    <span class="code-line">&lt;body&gt;</span>
-                    <span class="code-line">    &lt;button id="jokeBtn"&gt;Получить шутку&lt;/button&gt;</span>
-                    <span class="code-line">    &lt;div id="result"&gt;&lt;/div&gt;</span>
-                    <span class="code-line">    </span>
-                    <span class="code-line">    &lt;script&gt;</span>
-                    <span class="code-line">        // Находим кнопку и контейнер для результата</span>
-                    <span class="code-line">        const btn = document.getElementById('jokeBtn');</span>
-                    <span class="code-line">        const resultDiv = document.getElementById('result');</span>
-                    <span class="code-line">        </span>
-                    <span class="code-line">        // Объявляем асинхронную функцию (async)</span>
-                    <span class="code-line">        async function getJoke() {</span>
-                    <span class="code-line">            // Показываем, что загрузка началась</span>
-                    <span class="code-line">            resultDiv.innerHTML = 'Загрузка...';</span>
-                    <span class="code-line">            </span>
-                    <span class="code-line">            // Оборачиваем в try/catch для обработки ошибок</span>
-                    <span class="code-line">            try {</span>
-                    <span class="code-line">                // Отправляем GET-запрос и ждём ответ (await)</span>
-                    <span class="code-line">                const response = await fetch('https://icanhazdadjoke.com/', {</span>
-                    <span class="code-line">                    // Указываем, что хотим получить ответ в формате JSON</span>
-                    <span class="code-line">                    headers: { 'Accept': 'application/json' }</span>
-                    <span class="code-line">                });</span>
-                    <span class="code-line">                </span>
-                    <span class="code-line">                // Превращаем ответ в объект (await response.json())</span>
-                    <span class="code-line">                const data = await response.json();</span>
-                    <span class="code-line">                </span>
-                    <span class="code-line">                // Показываем шутку на странице</span>
-                    <span class="code-line">                resultDiv.innerHTML = '😂 ' + data.joke;</span>
-                    <span class="code-line">            } catch(error) {</span>
-                    <span class="code-line">                // Если ошибка — показываем сообщение</span>
-                    <span class="code-line">                resultDiv.innerHTML = 'Ошибка: ' + error.message;</span>
-                    <span class="code-line">            }</span>
-                    <span class="code-line">        }</span>
-                    <span class="code-line">        </span>
-                    <span class="code-line">        // Вешаем обработчик на кнопку</span>
-                    <span class="code-line">        btn.addEventListener('click', getJoke);</span>
-                    <span class="code-line">    &lt;/script&gt;</span>
-                    <span class="code-line">&lt;/body&gt;</span>
-                    <span class="code-line">&lt;/html&gt;</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- ===== ЧАСТЬ 11: ПРАКТИЧЕСКИЙ ПРИМЕР 2 — ПОГОДА ===== -->
-        <h2>📖 Часть 11. Практический пример №2 — GET-запрос (погода)</h2>
+        <!-- ===== ЧАСТЬ 10: ПРАКТИЧЕСКИЙ ПРИМЕР — ПОГОДА ===== -->
+        <h2>📖 Часть 10. Практический пример — GET-запрос (погода)</h2>
         
         <div class="demo-page">
             <h3>🌦️ Пример GET-запроса — получить погоду в городе</h3>
@@ -603,22 +545,7 @@
     </div>
     
     <script>
-        // Пример 1: GET - шутка
-        document.getElementById('getJokeBtn').addEventListener('click', async function() {
-            const resultDiv = document.getElementById('getJokeResult');
-            resultDiv.innerHTML = '⏳ Загрузка...';
-            try {
-                const response = await fetch('https://icanhazdadjoke.com/', {
-                    headers: { 'Accept': 'application/json' }
-                });
-                const data = await response.json();
-                resultDiv.innerHTML = '😂 ' + data.joke;
-            } catch(error) {
-                resultDiv.innerHTML = '❌ Ошибка: ' + error.message;
-            }
-        });
-        
-        // Пример 2: GET - погода
+        // Пример: GET - погода
         document.getElementById('getWeatherBtn').addEventListener('click', async function() {
             const city = document.getElementById('cityInput').value.trim();
             const resultDiv = document.getElementById('getWeatherResult');
